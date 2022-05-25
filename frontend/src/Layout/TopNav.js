@@ -1,17 +1,24 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import {LinkContainer} from 'react-router-bootstrap'
 
 const TopNav = () => {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">AXL Rows</Navbar.Brand>
+                <LinkContainer to="/">
+                    <Navbar.Brand>AXL Rows</Navbar.Brand>
+                </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Query</Nav.Link>
-                        <Nav.Link href="#home">UCM's</Nav.Link>
+                        <LinkContainer to="/ucm">
+                            <Nav.Link>UCM's</Nav.Link>
+                        </LinkContainer>
+                        <LinkContainer to="/query">
+                            <Nav.Link>Query</Nav.Link>
+                        </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

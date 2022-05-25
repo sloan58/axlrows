@@ -43,7 +43,7 @@ class UcmController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Ucm the specified resource in storage.
      *
      * @param Request $request
      * @param Ucm $ucm
