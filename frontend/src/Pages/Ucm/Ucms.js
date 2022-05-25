@@ -7,8 +7,7 @@ const Ucms = () => {
 
     const [ucms, setUcms] = useState([]);
     useEffect(() => {
-        console.log(fetch('http://axlrows.test/api/ucm')
-            .then(data => data.json())
+        console.log(request('/ucm')
             .then(ucms => setUcms(ucms))
             .catch(err => console.log(err))
         )

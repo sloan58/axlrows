@@ -19,7 +19,7 @@ const client = axios.create({
     baseURL: constants.api.url,
 });
 
-client.defaults.withCredentials = true
+// client.defaults.withCredentials = true
 
 
 
