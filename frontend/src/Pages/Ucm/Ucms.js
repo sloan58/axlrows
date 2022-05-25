@@ -1,7 +1,7 @@
 import {Col, Row, Table} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import Navbar from "react-bootstrap/Navbar";
 import {LinkContainer} from "react-router-bootstrap";
+import request from '../../util/request'
 
 const Ucms = () => {
 
