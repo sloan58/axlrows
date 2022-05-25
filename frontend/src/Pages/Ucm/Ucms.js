@@ -1,7 +1,7 @@
 import {Button, Col, Row, Spinner, Table} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {LinkContainer} from "react-router-bootstrap";
-import request from '../../util/request'
+import {fetchWrapper} from "../../util/fetchWrapper";
 
 const Ucms = () => {
 
@@ -9,11 +9,12 @@ const Ucms = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        request('/ucm')
+        fetchWrapper.get('/ucm')
             .then(ucms => {
                 setUcms(ucms)
                 setIsLoading(false)
-            }).catch(err => console.log(err))
+            })
+            .catch(error => console.error(error));
     }, [])
 
     return (
