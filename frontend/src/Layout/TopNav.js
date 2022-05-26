@@ -16,9 +16,6 @@ const TopNav = () => {
                         <LinkContainer to="/ucm">
                             <Nav.Link>UCM's</Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to="/query">
-                            <Nav.Link>Query</Nav.Link>
-                        </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

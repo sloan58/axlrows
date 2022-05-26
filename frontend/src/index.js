@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Ucms from "./Pages/Ucm/Ucms";
 import Ucm from "./Pages/Ucm/Ucm";
+import Query from "./Pages/Query/Query";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,7 +14,7 @@ root.render(
       <BrowserRouter>
           <Routes>
               <Route path="/" element={<App />}>
-                  <Route index element={<Ucms />} />
+                  <Route index element={<Query />} />
                   <Route path="/ucm" element={<Ucms />} />
                   <Route path="/ucm/:ucmId" element={<Ucm />}/>
                   <Route
