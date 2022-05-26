@@ -2,16 +2,15 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Button, Col, Form, Row, Toast, ToastContainer} from "react-bootstrap";
 import {fetchWrapper} from "../../util/fetchWrapper";
+import {useContext} from "react";
+import AppContext from "../../state/AppContext";
 
 const Ucm = () => {
+    const { state, dispatch } = useContext(AppContext);
+
     let params = useParams();
     const [input, setInput] = useState({});
 
-    const [success, setSuccess] = useState(false);
-    const toggleSuccess = () => setSuccess(!success);
-
-    const [fail, setFail] = useState(false);
-    const toggleFail = () => setFail(!fail);
 
     useEffect(() => {
         fetchWrapper.get(`/ucm/${params.ucmId}`)
@@ -22,9 +21,19 @@ const Ucm = () => {
     const handleSubmit = e => {
         e.preventDefault()
         fetchWrapper.put(`/ucm/${params.ucmId}`, input)
-            .then(ucm => toggleSuccess())
+            .then(() => {
+                dispatch({
+                    "type": "TOAST_SHOW_SUCCESS",
+                    "title": "Success",
+                    "message": "Ucm Updated!"
+                })
+            })
             .catch(error => {
-                toggleFail()
+                dispatch({
+                    "type": "TOAST_SHOW_FAIL",
+                    "title": "Error",
+                    "message": "Ucm could not be updated"
+                })
                 console.error(error)
             });
     }
@@ -94,26 +103,6 @@ const Ucm = () => {
                             Submit
                         </Button>
                     </Form>
-                </Col>
-            </Row>
-            <Row>
-                <Col md={6} className="mb-2">
-                    <ToastContainer className="p-3" position="top-end">
-                        <Toast show={success} onClose={toggleSuccess} delay={3000} autohide>
-                            <Toast.Header>
-                                <strong className="me-auto text-success">Success</strong>
-                            </Toast.Header>
-                            <Toast.Body>UCM Updated!</Toast.Body>
-                        </Toast>
-                    </ToastContainer>
-                    <ToastContainer className="p-3" position="top-end">
-                        <Toast show={fail} onClose={toggleFail}>
-                            <Toast.Header>
-                                <strong className="me-auto text-danger">Error</strong>
-                            </Toast.Header>
-                            <Toast.Body>Sorry, we couldn't update the UCM</Toast.Body>
-                        </Toast>
-                    </ToastContainer>
                 </Col>
             </Row>
         </>

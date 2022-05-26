@@ -1,10 +1,12 @@
 import {Button, Col, Row, Spinner, Table} from "react-bootstrap";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {LinkContainer} from "react-router-bootstrap";
 import {fetchWrapper} from "../../util/fetchWrapper";
+import AppContext from "../../state/AppContext";
 
 const Ucms = () => {
 
+    const appContext = useContext(AppContext);
     const [ucms, setUcms] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
 
