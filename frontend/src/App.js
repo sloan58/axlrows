@@ -1,10 +1,10 @@
 import {Container} from "react-bootstrap";
 import TopNav from "./Layout/TopNav";
 import {Outlet} from "react-router-dom";
-import AppContext from "./state/AppContext";
+import AppContext from "./store/AppContext";
 import {useReducer} from "react";
-import appReducer from "./state/reducer";
-import initialState from "./state/initialState";
+import appReducer from "./store/reducer";
+import initialState from "./store/initialState";
 import Toasts from "./Components/Toasts";
 
 

@@ -2,11 +2,11 @@ import {Button, Col, Row, Spinner, Table} from "react-bootstrap";
 import {useContext, useEffect, useState} from "react";
 import {LinkContainer} from "react-router-bootstrap";
 import {fetchWrapper} from "../../util/fetchWrapper";
-import AppContext from "../../state/AppContext";
+import AppContext from "../../store/AppContext";
 
 const Ucms = () => {
 
-    const appContext = useContext(AppContext);
+    const {state, dispatch}  = useContext(AppContext);
     const [ucms, setUcms] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
 
@@ -16,7 +16,15 @@ const Ucms = () => {
                 setUcms(ucms)
                 setIsLoading(false)
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error(error)
+                dispatch({
+                    "type": "TOAST_SHOW_ERROR",
+                    "title": "Oops!",
+                    "message": "Sorry, there was a problem loading the UCM's"
+                })
+                setIsLoading(false)
+            });
     }, [])
 
     return (

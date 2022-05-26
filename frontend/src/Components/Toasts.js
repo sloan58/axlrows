@@ -1,5 +1,5 @@
 import {Col, Row, Toast, ToastContainer} from "react-bootstrap";
-import AppContext from "../state/AppContext";
+import AppContext from "../store/AppContext";
 import {useContext} from "react";
 
 const Toasts = () => {
