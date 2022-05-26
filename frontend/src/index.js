@@ -13,6 +13,7 @@ root.render(
       <BrowserRouter>
           <Routes>
               <Route path="/" element={<App />}>
+                  <Route index element={<Ucms />} />
                   <Route path="/ucm" element={<Ucms />} />
                   <Route path="/ucm/:ucmId" element={<Ucm />}/>
                   <Route
