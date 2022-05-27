@@ -4,6 +4,7 @@ import { sql } from '@codemirror/lang-sql';
 import { oneDark } from '@codemirror/theme-one-dark';
 import {useContext, useState} from "react";
 import AppContext from "../../store/AppContext";
+import {fetchWrapper} from "../../util/fetchWrapper";
 
 const Query = () => {
     const { state, dispatch } = useContext(AppContext);
@@ -11,9 +12,18 @@ const Query = () => {
 
     const handleSubmit = () => {
         setLoading(true)
-        setTimeout(() => {
+        fetchWrapper.post('/query', {
+            "ucms": [1],
+            "query": "SELECT name FROM device"
+        })
+        .then(response => {
             setLoading(false)
-        }, 2000);
+            console.log(response)
+        })
+        .catch(error => {
+            setLoading(false)
+            console.error(error)
+        });
     }
 
     const handleOnChange = value => {
