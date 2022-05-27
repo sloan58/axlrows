@@ -29,6 +29,26 @@ const Ucms = () => {
             });
     }, [])
 
+    const deleteUcm = ucm => {
+        fetchWrapper.delete(`/ucm/${ucm.id}`)
+            .then(() => {
+                setUcms(ucms.filter(_ucm => _ucm.id !== ucm.id))
+                dispatch({
+                    "type": "TOAST_SHOW_SUCCESS",
+                    "title": "Success!",
+                    "message": "UCM was deleted"
+                })
+            })
+            .catch(error => {
+                console.error(error)
+                dispatch({
+                    "type": "TOAST_SHOW_ERROR",
+                    "title": "Oops!",
+                    "message": "Sorry, there was a problem deleting the UCM's"
+                })
+            });
+    }
+
     return (
         <>
             <Row className="justify-content-md-center mt-5 text-end">
@@ -61,6 +81,7 @@ const Ucms = () => {
                                 <th>IP Address</th>
                                 <th>Username</th>
                                 <th>Version</th>
+                                <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -73,6 +94,15 @@ const Ucms = () => {
                                         <td>{ucm.ipAddress}</td>
                                         <td>{ucm.username}</td>
                                         <td>{ucm.version}</td>
+                                        <td>
+                                            <Button
+                                                variant="danger"
+                                                size="sm"
+                                                onClick={() => deleteUcm(ucm)}
+                                            >
+                                                Delete
+                                            </Button>
+                                        </td>
                                     </tr>
                                 )
                             })}
