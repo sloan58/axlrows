@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Ucm;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 use App\Http\Controllers\Controller;
 
