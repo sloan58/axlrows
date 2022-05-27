@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\UcmController;
 
 Route::resource('/ucm', UcmController::class)->except(['create', 'edit']);
 Route::post('/query', function() {
+    info('query', request()->all());
     return response(['message' => 'All Good']);
 });
 

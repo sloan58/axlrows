@@ -5,7 +5,10 @@ const initialState = {
         "success": false,
         "fail": false
     },
-    "query": ""
+    "query": {
+        "statement": "",
+        "targets": []
+    },
 }
 
 export default initialState
