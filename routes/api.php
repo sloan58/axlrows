@@ -17,8 +17,13 @@ use App\Http\Controllers\Api\UcmController;
 
 Route::resource('/ucm', UcmController::class)->except(['create', 'edit']);
 Route::post('/query', function() {
-    info('query', request()->all());
-    return response(['message' => 'All Good']);
+    $user = \App\Models\User::first();
+    $queryHistory = (array) $user->queryHistory;
+    array_unshift($queryHistory, request()->get('statement'));
+    $queryHistory = array_slice($queryHistory, 0, 10);
+    $user->queryHistory = $queryHistory;
+    $user->save();
+    return response(['message' => $queryHistory]);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
