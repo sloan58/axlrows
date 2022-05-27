@@ -7,7 +7,8 @@ const initialState = {
     },
     "query": {
         "statement": "",
-        "targets": []
+        "targets": [],
+        "results": []
     },
 }
 

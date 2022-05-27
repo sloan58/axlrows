@@ -19,9 +19,13 @@ use App\Http\Controllers\Api\UcmController;
 Route::resource('/ucm', UcmController::class)->except(['create', 'edit']);
 Route::post('/query', function() {
 
-    $ucm = \App\Models\Ucm::find(request()->get('targets')[0]['value']);
-
-    $data = $ucm->sendQuery(request()->get('statement'));
+    $response = [];
+    foreach(request()->get('targets') as $target) {
+        $ucm = \App\Models\Ucm::find($target['value']);
+        $data = $ucm->sendQuery(request()->get('statement'));
+        $response[$target['label']]['data'] = $data;
+        $response[$target['label']]['error'] = null;
+    }
 
     $user = \App\Models\User::first();
     $queryHistory = (array) $user->queryHistory;
@@ -30,7 +34,7 @@ Route::post('/query', function() {
     $user->queryHistory = $queryHistory;
     $user->save();
 
-    return response(['message' => $data]);
+    return response(['message' => $response]);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
