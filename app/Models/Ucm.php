@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Exception;
+use SimpleXMLElement;
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
+use GuzzleHttp\Exception\GuzzleException;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ucm extends Model
 {
@@ -37,4 +41,65 @@ class Ucm extends Model
      * @var array
      */
     protected $hidden = ['password'];
+
+    /**
+     * @throws GuzzleException
+     */
+    public function sendQuery($statement)
+    {
+        return $this->callAxlApi(
+            $this->buildSoapRequest($statement)
+        );
+    }
+
+    private function buildSoapRequest($statement): array|string
+    {
+        return '<?xml version="1.0" encoding="UTF-8"?>
+                  <SOAP-ENV:Envelope
+                    xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:ns1="http://www.cisco.com/AXL/API/' . $this->version . '"
+                    >
+                    <SOAP-ENV:Body>
+                        <ns1:executeSQLQuery>
+                            <sql>' . $statement . '</sql>
+                        </ns1:executeSQLQuery>
+                    </SOAP-ENV:Body>
+                  </SOAP-ENV:Envelope>';
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
+    private function callAxlApi($body)
+    {
+        $client = new Client();
+        $response = $client->request('POST', "https://{$this->ipAddress}:8443/axl/", [
+            'auth' => [$this->username, $this->password],
+            'headers' => [
+                'Content-Type' => 'text/xml; charset=utf-8',
+                'SOAPAction' => "UCM:DB ver={$this->version} executeSQLQuery",
+            ],
+            'verify' => false,
+            'body' => $body,
+        ]);
+
+        return $this->processAxlResponse($response);
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function processAxlResponse($response)
+    {
+        $response = preg_replace(
+            "/(<\/?)(\w+):([^>]*>)/",
+            "$1$2$3",
+            $response->getBody()->getContents()
+        );
+        $xml = new SimpleXMLElement($response);
+        $body = $xml->xpath('//soapenvBody//nsexecuteSQLQueryResponse//return//row');
+        return json_decode(json_encode((array) $body), true);
+    }
 }
