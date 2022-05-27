@@ -4,7 +4,8 @@ const initialState = {
         "message": "",
         "success": false,
         "fail": false
-    }
+    },
+    "query": ""
 }
 
 export default initialState

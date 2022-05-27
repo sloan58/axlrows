@@ -30,6 +30,13 @@ const appReducer = (state, action) => {
                     "success": false,
                 }
             }
+        case 'QUERY_UPDATED':
+            return {
+                ...state,
+                "query": {
+                    "current": action.query,
+                }
+            }
         default:
             throw new Error();
     }
