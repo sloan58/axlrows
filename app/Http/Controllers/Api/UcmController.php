@@ -58,7 +58,16 @@ class UcmController extends Controller
      */
     public function update(Request $request, Ucm $ucm): bool
     {
-        return $ucm->update($request->all());
+        request()->validate([
+            'name' => 'required|unique:ucms,name,' . $ucm->id . '|max:255',
+            'ipAddress' => 'required|ipv4',
+            'username' => 'required|max:255',
+            'password' => 'sometimes|max:255',
+            'version' => 'required|in:14,12.5,11.5,10.5'
+        ]);
+        return $ucm->update($request->except(
+            request()->filled('password') ?: 'password'
+        ));
     }
 
     /**

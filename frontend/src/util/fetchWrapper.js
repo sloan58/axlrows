@@ -9,7 +9,11 @@ export const fetchWrapper = {
 
 function get(url) {
     const requestOptions = {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
     };
     return fetch(config.api.base_url + url, requestOptions).then(handleResponse);
 }
@@ -29,7 +33,10 @@ function post(url, body) {
 function put(url, body) {
     const requestOptions = {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(body)
     };
     return fetch(config.api.base_url + url, requestOptions).then(handleResponse);
@@ -38,7 +45,11 @@ function put(url, body) {
 // prefixed with underscored because delete is a reserved word in javascript
 function _delete(url) {
     const requestOptions = {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
     };
     return fetch(config.api.base_url + url, requestOptions).then(handleResponse);
 }

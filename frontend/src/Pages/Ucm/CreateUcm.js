@@ -46,7 +46,6 @@ const CreateUcm = () => {
                             <Form.Label>Name</Form.Label>
                             <Form.Control type="text"
                                           id="name"
-                                          placeholder=""
                                           value={input.name || ''}
                                           onChange={e =>
                                               setInput({ ...input, [e.target.id]: e.target.value })
@@ -60,7 +59,6 @@ const CreateUcm = () => {
                             <Form.Label>IP Address</Form.Label>
                             <Form.Control type="text"
                                           id="ipAddress"
-                                          placeholder=""
                                           value={input.ipAddress || ''}
                                           onChange={e =>
                                               setInput({ ...input, [e.target.id]: e.target.value })
@@ -74,7 +72,6 @@ const CreateUcm = () => {
                             <Form.Label>Username</Form.Label>
                             <Form.Control type="text"
                                           id="username"
-                                          placeholder=""
                                           value={input.username || ''}
                                           onChange={e =>
                                               setInput({ ...input, [e.target.id]: e.target.value })
@@ -88,7 +85,6 @@ const CreateUcm = () => {
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password"
                                           id="password"
-                                          placeholder=""
                                           value={input.password || ''}
                                           onChange={e =>
                                               setInput({ ...input, [e.target.id]: e.target.value })
@@ -102,7 +98,7 @@ const CreateUcm = () => {
                             <Form.Label>Version</Form.Label>
                             <Form.Select
                                 id="version"
-                                aria-label="Default select example"
+                                aria-label="Select UCM version"
                                 value={input.version || ''}
                                 isInvalid={ !!errors.version }
                                 onChange={e =>
