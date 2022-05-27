@@ -7,6 +7,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Ucms from "./Pages/Ucm/Ucms";
 import Ucm from "./Pages/Ucm/Ucm";
 import Query from "./Pages/Query/Query";
+import CreateUcm from "./Pages/Ucm/CreateUcm";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
                   <Route index element={<Query />} />
                   <Route path="/ucm" element={<Ucms />} />
                   <Route path="/ucm/:ucmId" element={<Ucm />}/>
+                  <Route path="/ucm/create" element={<CreateUcm />}/>
                   <Route
                       path="*"
                       element={

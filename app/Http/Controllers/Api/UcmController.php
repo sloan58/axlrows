@@ -26,8 +26,15 @@ class UcmController extends Controller
      * @param Request $request
      * @return Ucm
      */
-    public function store(Request $request): Ucm
+    public function store(Request $request)
     {
+        request()->validate([
+            'name' => 'required|unique:ucms|max:255',
+            'ipAddress' => 'required|ipv4',
+            'username' => 'required|max:255',
+            'password' => 'required|max:255',
+            'version' => 'required|in:14,12.5,11.5,10.5'
+        ]);
         return Ucm::create($request->all());
     }
 
