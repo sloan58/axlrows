@@ -74,18 +74,28 @@ class Ucm extends Model
     private function callAxlApi($body)
     {
         $client = new Client();
-        $response = $client->request('POST', "https://{$this->ipAddress}:8443/axl/", [
-            'auth' => [$this->username, $this->password],
-            'headers' => [
-                'Content-Type' => 'text/xml; charset=utf-8',
-                'SOAPAction' => "UCM:DB ver={$this->version} executeSQLQuery",
-            ],
-            'verify' => false,
-            'body' => $body,
-        ]);
-
-        return $this->processAxlResponse($response);
-
+        try {
+            return $this->processAxlResponse(
+                $client->request('POST', "https://{$this->ipAddress}:8443/axl/", [
+                    'auth' => [$this->username, $this->password],
+                    'headers' => [
+                        'Content-Type' => 'text/xml; charset=utf-8',
+                        'SOAPAction' => "UCM:DB ver={$this->version} executeSQLQuery",
+                    ],
+                    'verify' => false,
+                    'body' => $body,
+                    'connect_timeout' => 3
+                ])
+            );
+        } catch (Exception $e) {
+            logger()->error(__METHOD__ . ": Error calling executeSQLQuery", [
+                'line' => $e->getLine(),
+                'message' => $e->getMessage(),
+                'ucm' => $this->id,
+//                'user' => auth()->user()->id
+            ]);
+            return [];
+        }
     }
 
     /**
