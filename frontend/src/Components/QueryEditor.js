@@ -12,12 +12,20 @@ const QueryEditor = () => {
 
     const handleSubmit = () => {
         setLoading(true)
+        dispatch({
+            "type": "QUERY_RESULTS_UPDATED",
+            "results": []
+        })
         fetchWrapper.post('/query', {
-            "statement": state.query.statement,
-            "targets": state.query.targets
+            "statement": state.query_statement,
+            "targets": state.query_targets
         })
             .then(response => {
                 setLoading(false)
+                dispatch({
+                    "type": "QUERY_RESULTS_UPDATED",
+                    "results": response
+                })
                 console.log(response)
             })
             .catch(error => {
@@ -31,9 +39,9 @@ const QueryEditor = () => {
             <Row className="justify-content-md-center mt-3">
                 <Col xs={12} md={10} lg={8}>
                     <CodeMirror
-                        value={state.query.current}
+                        value={state.query_statement}
                         width="100%"
-                        height="400px"
+                        height="250px"
                         theme={oneDark}
                         extensions={[sql({
                             upperCaseKeywords: true

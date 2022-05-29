@@ -5,11 +5,9 @@ const initialState = {
         "success": false,
         "fail": false
     },
-    "query": {
-        "statement": "",
-        "targets": [],
-        "results": []
-    },
+    "query_statement": "",
+    "query_targets": [],
+    "query_results": []
 }
 
 export default initialState

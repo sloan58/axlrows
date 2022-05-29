@@ -45,7 +45,7 @@ class Ucm extends Model
     /**
      * @throws GuzzleException
      */
-    public function sendQuery($statement)
+    public function sendQuery($statement): array
     {
         return $this->callAxlApi(
             $this->buildSoapRequest($statement)
@@ -75,7 +75,7 @@ class Ucm extends Model
     {
         $client = new Client();
         try {
-            return $this->processAxlResponse(
+            $response = $this->processAxlResponse(
                 $client->request('POST', "https://{$this->ipAddress}:8443/axl/", [
                     'auth' => [$this->username, $this->password],
                     'headers' => [
@@ -87,6 +87,10 @@ class Ucm extends Model
                     'connect_timeout' => 3
                 ])
             );
+            return [
+                'data' => $response,
+                'error' => ''
+            ];
         } catch (Exception $e) {
             logger()->error(__METHOD__ . ": Error calling executeSQLQuery", [
                 'line' => $e->getLine(),
@@ -94,7 +98,10 @@ class Ucm extends Model
                 'ucm' => $this->id,
 //                'user' => auth()->user()->id
             ]);
-            return [];
+            return [
+                'data' => [],
+                'error' => $e->getMessage()
+            ];
         }
     }
 

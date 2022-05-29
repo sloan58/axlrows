@@ -29,7 +29,7 @@ const TargetSelector = () => {
                 <Select
                     placeholder='Select Query Targets...'
                     closeMenuOnSelect={false}
-                    defaultValue={state.query.targets}
+                    defaultValue={state.query_targets}
                     isMulti
                     options={ucms.map(ucm => {
                         return { label: ucm.name, value: ucm.id }

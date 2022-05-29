@@ -22,9 +22,12 @@ Route::post('/query', function() {
     $response = [];
     foreach(request()->get('targets') as $target) {
         $ucm = \App\Models\Ucm::find($target['value']);
-        $data = $ucm->sendQuery(request()->get('statement'));
-        $response[$target['label']]['data'] = $data;
-        $response[$target['label']]['error'] = null;
+        ['data' => $data, 'error' => $error] = $ucm->sendQuery(request()->get('statement'));
+        $response[] = [
+            'target' => $target['label'],
+            'data' => $data,
+            'error' => $error
+        ];
     }
 
     $user = \App\Models\User::first();
@@ -34,7 +37,7 @@ Route::post('/query', function() {
     $user->queryHistory = $queryHistory;
     $user->save();
 
-    return response(['message' => $response]);
+    return response((array) $response);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

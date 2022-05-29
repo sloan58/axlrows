@@ -33,18 +33,17 @@ const appReducer = (state, action) => {
         case 'QUERY_STATEMENT_UPDATED':
             return {
                 ...state,
-                "query": {
-                    "statement": action.statement,
-                    "targets": state.query.targets
-                },
+                "query_statement": action.statement
             }
         case 'QUERY_TARGETS_UPDATED':
             return {
                 ...state,
-                "query": {
-                    "statement": state.query.statement,
-                    "targets": action.targets
-                },
+                "query_targets": action.targets
+            }
+        case 'QUERY_RESULTS_UPDATED':
+            return {
+                ...state,
+                "query_results": action.results
             }
         default:
             throw new Error();
