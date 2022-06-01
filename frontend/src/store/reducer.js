@@ -1,3 +1,5 @@
+import initialState from "./initialState";
+
 const appReducer = (state, action) => {
     switch (action.type) {
         case 'TOAST_SHOW_SUCCESS':
@@ -48,7 +50,31 @@ const appReducer = (state, action) => {
         case 'PAGINATION_LENGTH_UPDATED':
             return {
                 ...state,
-                "pagination_length": action.length
+                "pagination_length": action.length,
+                "pagination_end": action.length
+            }
+        case 'PAGINATION_INCREMENTED':
+            return {
+                ...state,
+                "pagination_start": state.pagination_start + state.pagination_length,
+                "pagination_end": state.pagination_end + state.pagination_length
+            }
+        case 'PAGINATION_DECREMENTED':
+            return {
+                ...state,
+                "pagination_start": state.pagination_start - state.pagination_length,
+                "pagination_end": state.pagination_end - state.pagination_length
+            }
+        case 'PAGINATION_RESET':
+            return {
+                ...state,
+                "pagination_start": initialState.pagination_start,
+                "pagination_end": initialState.pagination_end
+            }
+        case 'SEARCH_UPDATED':
+            return {
+                ...state,
+                "results_search": action.search
             }
         default:
             throw new Error();

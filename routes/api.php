@@ -20,6 +20,8 @@ Route::resource('/ucm', UcmController::class)->except(['create', 'edit']);
 Route::post('/query', function() {
 
     $response = [];
+    $columns = [];
+    $totalRows = 0;
     foreach(request()->get('targets') as $target) {
         $ucm = \App\Models\Ucm::find($target['value']);
         ['data' => $data, 'error' => $error] = $ucm->sendQuery(request()->get('statement'));
@@ -28,20 +30,18 @@ Route::post('/query', function() {
             return $row;
         }, $data);
         $columns = count($data) ? array_keys($data[0]) : [];
-        $response[] = [
+        $response['results'][] = [
             'target' => $target['label'],
-            'columns' => $columns,
             'data' => $data,
             'error' => $error
         ];
+        $totalRows = $totalRows + count($data);
     }
 
-    $user = \App\Models\User::first();
-    $queryHistory = (array) $user->queryHistory;
-    array_unshift($queryHistory, request()->get('statement'));
-    $queryHistory = array_slice($queryHistory, 0, 10);
-    $user->queryHistory = $queryHistory;
-    $user->save();
+    $response['columns'] = $columns;
+    $response['totalRows'] = $totalRows;
+
+    \App\Models\User::first()->updateQueryHistory(request()->get('statement'));
 
     return response((array) $response);
 });

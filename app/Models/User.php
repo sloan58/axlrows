@@ -43,4 +43,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'queryHistory' => 'array'
     ];
+
+    public function updateQueryHistory($query)
+    {
+        $queryHistory = (array) $this->queryHistory;
+        array_unshift($queryHistory, $query);
+        $queryHistory = array_slice($queryHistory, 0, 10);
+        $this->queryHistory = $queryHistory;
+        $this->save();
+    }
 }

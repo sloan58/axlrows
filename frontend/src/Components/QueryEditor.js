@@ -16,6 +16,9 @@ const QueryEditor = () => {
             "type": "QUERY_RESULTS_UPDATED",
             "results": []
         })
+        dispatch({
+            "type": "PAGINATION_RESET"
+        })
         fetchWrapper.post('/query', {
             "statement": state.query_statement,
             "targets": state.query_targets
