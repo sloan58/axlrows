@@ -45,6 +45,11 @@ const appReducer = (state, action) => {
                 ...state,
                 "query_results": action.results
             }
+        case 'PAGINATION_LENGTH_UPDATED':
+            return {
+                ...state,
+                "pagination_length": action.length
+            }
         default:
             throw new Error();
     }

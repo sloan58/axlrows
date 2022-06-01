@@ -7,7 +7,8 @@ const initialState = {
     },
     "query_statement": "",
     "query_targets": [],
-    "query_results": []
+    "query_results": [],
+    "pagination_length": 10
 }
 
 export default initialState

@@ -27,9 +27,10 @@ Route::post('/query', function() {
             $row['ucm'] = $ucm->name;
             return $row;
         }, $data);
+        $columns = count($data) ? array_keys($data[0]) : [];
         $response[] = [
             'target' => $target['label'],
-            'columns' => array_keys($data[0]) ?? [],
+            'columns' => $columns,
             'data' => $data,
             'error' => $error
         ];
