@@ -1,4 +1,4 @@
-import {Button, Card, Col, Nav, Row} from "react-bootstrap";
+import {Button, Card, Col, Nav, Row, Table} from "react-bootstrap";
 import AppContext from "../store/AppContext";
 import {useContext} from "react";
 
@@ -10,29 +10,32 @@ const QueryResults = () => {
             {state.query_results.length !== 0 && (
                 <Row className="justify-content-md-center mt-3">
                     <Col xs={12} md={10} lg={10}>
-                        <Card>
-                            <Card.Header>
-                                <Nav variant="tabs" defaultActiveKey="#first">
-                                    {state.query_results.map((result, index) => {
-                                        return (
-                                            <Nav.Item key={index}>
-                                                <Nav.Link
-                                                    href="#first">
-                                                    {result.target}
-                                                </Nav.Link>
-                                            </Nav.Item>
-                                            )
-                                    })}
-                                </Nav>
-                            </Card.Header>
-                            <Card.Body>
-                                <Card.Title>Special title treatment</Card.Title>
-                                <Card.Text>
-                                    With supporting text below as a natural lead-in to additional content.
-                                </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
-                            </Card.Body>
-                        </Card>
+                        <Table striped bordered hover>
+                            <thead>
+                            <tr>
+                                {state.query_results && state.query_results[0].columns.map(column => {
+                                    return (
+                                        <th>{column}</th>
+                                    )
+                                })}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {state.query_results && state.query_results.map(ucm => {
+                                return ucm.data.map(row => {
+                                    return (
+                                        <tr>
+                                            {state.query_results[0].columns.map(column => {
+                                                return (
+                                                    <td>{row[column]}</td>
+                                                )
+                                            })}
+                                        </tr>
+                                    )
+                                })
+                            })}
+                            </tbody>
+                        </Table>
                     </Col>
                 </Row>
             )}

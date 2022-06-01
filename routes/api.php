@@ -23,8 +23,13 @@ Route::post('/query', function() {
     foreach(request()->get('targets') as $target) {
         $ucm = \App\Models\Ucm::find($target['value']);
         ['data' => $data, 'error' => $error] = $ucm->sendQuery(request()->get('statement'));
+        $data = array_map(function($row) use ($ucm) {
+            $row['ucm'] = $ucm->name;
+            return $row;
+        }, $data);
         $response[] = [
             'target' => $target['label'],
+            'columns' => array_keys($data[0]) ?? [],
             'data' => $data,
             'error' => $error
         ];
