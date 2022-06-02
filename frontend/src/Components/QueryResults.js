@@ -70,8 +70,8 @@ const QueryResults = () => {
                                     <Form.Control onChange={updateSearch} type="email" placeholder={state.results_search === '' ? 'Search' : state.results_search} />
                                 </Col>
                                 <Col className="d-inline-flex justify-content-end">
-                                    <div className="mt-2 text-success" style={{cursor: 'pointer'}}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    <div className="mt-2 me-2 text-success" style={{cursor: 'pointer'}}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                                              className="bi bi-download" viewBox="0 0 16 16">
                                             <path
                                                 d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
