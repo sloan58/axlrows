@@ -31,6 +31,18 @@ const QueryResults = () => {
         return (state.pagination_start - state.pagination_length) >= 0;
     }
 
+    const gotoPaginationStart = () => {
+        dispatch({
+            'type': 'PAGINATION_GOTO_START'
+        })
+    }
+
+    const gotoPaginationEnd = () => {
+        dispatch({
+            'type': 'PAGINATION_GOTO_END'
+        })
+    }
+
     const nextPage = () => {
         if(canIncrementPagination()) {
             dispatch({
@@ -53,7 +65,7 @@ const QueryResults = () => {
                 <>
                     <Row className="justify-content-md-center mt-5">
                         <Col xs={5} className="text-start">
-                            <Col xs={4} className="text-start">
+                            <Col xs={7} className="text-start">
                                 <Form.Control onChange={updateSearch} type="email" placeholder={state.results_search === '' ? 'Search' : state.results_search} />
                             </Col>
                         </Col>
@@ -105,8 +117,10 @@ const QueryResults = () => {
                             {shouldShowPagination() &&
                                 (
                                     <Pagination className="float-end">
+                                        <Pagination.First onClick={gotoPaginationStart} disabled={!canDecrementPagination()}/>
                                         <Pagination.Prev onClick={prevPage} disabled={!canDecrementPagination()}/>
                                         <Pagination.Next onClick={nextPage} disabled={!canIncrementPagination()}/>
+                                        <Pagination.Last onClick={gotoPaginationEnd} disabled={!canIncrementPagination()}/>
                                     </Pagination>
                                 )
                             }

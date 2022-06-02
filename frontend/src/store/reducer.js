@@ -71,6 +71,18 @@ const appReducer = (state, action) => {
                 "pagination_start": initialState.pagination_start,
                 "pagination_end": initialState.pagination_end
             }
+        case 'PAGINATION_GOTO_START':
+            return {
+                ...state,
+                "pagination_start": initialState.pagination_start,
+                "pagination_end": state.pagination_length
+            }
+        case 'PAGINATION_GOTO_END':
+            return {
+                ...state,
+                "pagination_start": state.query_results.totalRows - (state.query_results.totalRows % state.pagination_length),
+                "pagination_end": (state.query_results.totalRows - (state.query_results.totalRows % state.pagination_length)) + state.pagination_length,
+            }
         case 'SEARCH_UPDATED':
             return {
                 ...state,
