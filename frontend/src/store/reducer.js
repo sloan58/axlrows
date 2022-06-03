@@ -39,7 +39,7 @@ const appReducer = (state, action) => {
             return {
                 ...state,
                 "pagination_start": initialState.pagination_start,
-                "pagination_end": initialState.pagination_end
+                "pagination_end": state.pagination_length
             }
         case 'PAGINATION_GOTO_START':
             return {

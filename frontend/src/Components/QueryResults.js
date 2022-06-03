@@ -59,6 +59,24 @@ const QueryResults = () => {
         }
     }
 
+    const downloadResults = () => {
+        let downloadData = state.query_results.columns.join(',').concat('\n')
+        downloadData = downloadData.concat(state.query_results.results.map(result => {
+            return result.data.map(it => {
+                return Object.values(it).toString()
+            }).join('\n')
+        }))
+
+        const element = document.createElement('a')
+        const file = new Blob([downloadData], {
+            type: 'text/plain',
+        })
+        element.href = URL.createObjectURL(file)
+        element.download = 'axlrows.csv'
+        document.body.appendChild(element)
+        element.click()
+    }
+
     return (
         <>
             {state.query_results.length !== 0 && (
@@ -70,15 +88,17 @@ const QueryResults = () => {
                                     <Form.Control onChange={updateSearch} type="email" placeholder={state.results_search === '' ? 'Search' : state.results_search} />
                                 </Col>
                                 <Col className="d-inline-flex justify-content-end">
-                                    <div className="mt-2 text-success" style={{cursor: 'pointer'}}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                             className="bi bi-download" viewBox="0 0 16 16">
-                                            <path
-                                                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                            <path
-                                                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                        </svg>
-                                    </div>
+                                    {state.query_results.totalRows !== 0 && (
+                                        <div onClick={downloadResults} className="mt-2 me-2 text-success" style={{cursor: 'pointer'}}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                                                 className="bi bi-download" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                                <path
+                                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                            </svg>
+                                        </div>
+                                    )}
                                     <DropdownButton title={state.pagination_length} id="bg-vertical-dropdown-1" className="ms-3">
                                         <Dropdown.Item onClick={() => onSelect(10)}>10</Dropdown.Item>
                                         <Dropdown.Item onClick={() => onSelect(25)}>25</Dropdown.Item>
