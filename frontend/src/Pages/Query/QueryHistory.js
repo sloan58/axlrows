@@ -1,6 +1,5 @@
 import {Button, Col, Row, Spinner, Table} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
-import {useState, useEffect, useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {fetchWrapper} from "../../util/fetchWrapper";
 import {toast} from "react-toastify";
 import AppContext from "../../store/AppContext";
@@ -33,6 +32,37 @@ const QueryHistory = () => {
         navigate('/')
     }
 
+    const toggleFavorite = query => {
+        query.favorite = !query.favorite
+        fetchWrapper.put(`/query/${query.id}`, query)
+            .then(() => {
+                setMe({
+                    ...me,
+                    queries: me.queries.map(q => q.id === query.id ? query : q)
+                })
+                toast('Query updated!')
+            })
+            .catch(error => {
+                console.error(error)
+                toast.error("Sorry, there was a problem updating the query history")
+            });
+    }
+
+    const deleteQuery = query => {
+        fetchWrapper.delete(`/query/${query.id}`)
+            .then(() => {
+                setMe({
+                    ...me,
+                    queries: me.queries.filter(q => q.id !== query.id)
+                })
+                toast('Query deleted!')
+            })
+            .catch(error => {
+                console.error(error)
+                toast.error("Sorry, there was a problem deleting the query history")
+            });
+    }
+
     return (
         <>
             <Row className="justify-content-md-center mt-5 text-center">
@@ -58,17 +88,26 @@ const QueryHistory = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {me.queryHistory.map((query, index) => {
+                            {me.queries.map((query, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{query}</td>
+                                        <td>{query.statement}</td>
                                         <td>
-                                            <Button onClick={() => loadQuery(query)} variant="success">
+                                            <Button onClick={() => loadQuery(query.statement)} variant="success" size="sm">
                                                 Load
                                             </Button>
-                                            <Button variant="danger" className="ms-2">
+                                            <Button onClick={() => deleteQuery(query)} variant="danger" className="ms-2" size="sm">
                                                 Delete
                                             </Button>
+                                            {query.favorite ? (
+                                                <Button onClick={() => toggleFavorite(query)} variant="warning" className="ms-2" size="sm">
+                                                    Unfavorite
+                                                </Button>
+                                            ) : (
+                                                <Button onClick={() => toggleFavorite(query)} variant="primary" className="ms-2 px-2" size="sm">
+                                                    Favorite
+                                                </Button>
+                                            )}
                                         </td>
                                     </tr>
                                 )

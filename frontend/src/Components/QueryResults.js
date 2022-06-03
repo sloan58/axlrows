@@ -123,7 +123,7 @@ const QueryResults = () => {
                     </Row>
                     <Row className="justify-content-md-center mt-3">
                         <Col xs={10}>
-                            <Table striped bordered hover>
+                            <Table striped bordered hover responsive>
                                 <thead>
                                 <tr>
                                     {state.query_results.columns.map((column, index) => {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +22,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'queryHistory'
     ];
 
     /**
@@ -35,6 +35,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['queries'];
+
+    /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
@@ -44,12 +51,11 @@ class User extends Authenticatable
         'queryHistory' => 'array'
     ];
 
-    public function updateQueryHistory($query)
+    /**
+     * @return HasMany
+     */
+    public function queries(): HasMany
     {
-        $queryHistory = (array) $this->queryHistory;
-        array_unshift($queryHistory, $query);
-        $queryHistory = array_slice($queryHistory, 0, 10);
-        $this->queryHistory = $queryHistory;
-        $this->save();
+        return $this->hasMany(Query::class)->orderBy('created_at', 'desc');
     }
 }
