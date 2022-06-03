@@ -1,12 +1,11 @@
-import {useParams} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import {fetchWrapper} from "../../util/fetchWrapper";
-import AppContext from "../../store/AppContext";
 import {toast} from "react-toastify";
 
 const Ucm = () => {
-    const { state, dispatch } = useContext(AppContext);
+    let navigate = useNavigate();
 
     let params = useParams();
     const [input, setInput] = useState({});
@@ -117,6 +116,9 @@ const Ucm = () => {
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Submit
+                        </Button>
+                        <Button onClick={() => navigate('/ucm')} variant="secondary ms-2">
+                            Back
                         </Button>
                     </Form>
                 </Col>
