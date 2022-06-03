@@ -1,9 +1,15 @@
-import {Col, Dropdown, DropdownButton, Form, Pagination, Row, Table} from "react-bootstrap";
+import {Col, Dropdown, DropdownButton, Form, Pagination, Row, Spinner, Table} from "react-bootstrap";
 import AppContext from "../store/AppContext";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 
 const QueryResults = () => {
     const {state, dispatch} = useContext(AppContext)
+    const [downloading, setDownloading] = useState(false)
+    useEffect(() => {
+        if (downloading) {
+            downloadResults()
+        }
+    }, [downloading]);
 
     const onSelect = selected => {
         dispatch({
@@ -75,6 +81,7 @@ const QueryResults = () => {
         element.download = 'axlrows.csv'
         document.body.appendChild(element)
         element.click()
+        setDownloading(false);
     }
 
     return (
@@ -89,15 +96,21 @@ const QueryResults = () => {
                                 </Col>
                                 <Col className="d-inline-flex justify-content-end">
                                     {state.query_results.totalRows !== 0 && (
-                                        <div onClick={downloadResults} className="mt-2 me-2 text-success" style={{cursor: 'pointer'}}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
-                                                 className="bi bi-download" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                                <path
-                                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                            </svg>
-                                        </div>
+                                        downloading === true ? (
+                                                <Spinner animation="border" role="status" className="text-success">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </Spinner>
+                                            ) : (
+                                                <div onClick={() => setDownloading(true)} className="mt-2 me-2 text-success" style={{cursor: 'pointer'}}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                                                         className="bi bi-download" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                                        <path
+                                                            d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                                                    </svg>
+                                                </div>
+                                            )
                                     )}
                                     <DropdownButton title={state.pagination_length} id="bg-vertical-dropdown-1" className="ms-3">
                                         <Dropdown.Item onClick={() => onSelect(10)}>10</Dropdown.Item>
