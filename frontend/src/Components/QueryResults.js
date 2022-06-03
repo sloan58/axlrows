@@ -86,7 +86,7 @@ const QueryResults = () => {
 
     return (
         <>
-            {state.query_results.length !== 0 && (
+            {state.query_results.totalRows >= 1 && (
                 <>
                     <Row className="justify-content-md-center mt-5">
                         <Col xs={10}>
@@ -126,7 +126,7 @@ const QueryResults = () => {
                             <Table striped bordered hover>
                                 <thead>
                                 <tr>
-                                    {state.query_results && state.query_results.columns.map((column, index) => {
+                                    {state.query_results.columns.map((column, index) => {
                                         return (
                                             <th key={index}>{column}</th>
                                         )
@@ -134,7 +134,7 @@ const QueryResults = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {state.query_results && state.query_results.results.map(ucm => {
+                                {state.query_results.results.map(ucm => {
                                     return ucm.data.slice(state.pagination_start, state.pagination_end).map((row, index) => {
                                         if([].concat(...Object.values(row)).join(' ').toLowerCase().includes(state.results_search.toLowerCase())) {
                                             return (

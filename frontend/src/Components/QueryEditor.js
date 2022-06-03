@@ -30,7 +30,9 @@ const QueryEditor = () => {
                     console.log(result)
                     if(result.error) {
                         let message = `${result.target}: ${result.error}`
-                        toast.error(message)
+                        toast.error(message, {
+                            autoClose: false,
+                        })
                     }
                 })
                 dispatch({
