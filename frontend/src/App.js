@@ -16,7 +16,6 @@ function App() {
           <Container fluid>
               <TopNav />
               <Outlet />
-              {/*<Toasts />*/}
               <ToastContainer />
           </Container>
       </AppContext.Provider>

@@ -13,6 +13,9 @@ const TopNav = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
+                        <LinkContainer to="/query-history">
+                            <Nav.Link>Query History</Nav.Link>
+                        </LinkContainer>
                         <LinkContainer to="/ucm">
                             <Nav.Link>UCM's</Nav.Link>
                         </LinkContainer>

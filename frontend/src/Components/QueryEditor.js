@@ -70,7 +70,7 @@ const QueryEditor = () => {
                 <Col xs={12} md={10} lg={8}>
                     <Button
                         variant={!isLoading ? 'primary' : 'outline-primary'}
-                        disabled={isLoading}
+                        disabled={isLoading || state.query_targets.length === 0}
                         onClick={!isLoading ? handleSubmit : null}
                     >
                         {isLoading ? 'Loading…' : 'Submit'}

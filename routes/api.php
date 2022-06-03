@@ -16,6 +16,9 @@ use App\Http\Controllers\Api\UcmController;
 |
 */
 
+Route::get('/me', function() {
+    return \App\Models\User::first();
+});
 Route::resource('/ucm', UcmController::class)->except(['create', 'edit']);
 Route::post('/query', function() {
 
