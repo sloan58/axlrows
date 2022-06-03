@@ -3,6 +3,7 @@ import AppContext from "../../store/AppContext";
 import {useNavigate} from "react-router-dom";
 import {fetchWrapper} from "../../util/fetchWrapper";
 import {Button, Col, Form, Row} from "react-bootstrap";
+import {toast} from 'react-toastify';
 
 const CreateUcm = () => {
     let navigate = useNavigate();
@@ -16,11 +17,7 @@ const CreateUcm = () => {
         setErrors({})
         fetchWrapper.post("/ucm", input)
             .then(() => {
-                dispatch({
-                    "type": "TOAST_SHOW_SUCCESS",
-                    "title": "Success!",
-                    "message": "UCM Created"
-                })
+                toast.success("UCM Created!")
                 navigate('/ucm')
             })
             .catch(error => {
@@ -28,6 +25,7 @@ const CreateUcm = () => {
                 if(error.errors) {
                     setErrors(error.errors)
                 } else {
+                    toast.error("There was a problem creating the UCM!")
                     dispatch({
                         "type": "TOAST_SHOW_FAIL",
                         "title": "Error!",

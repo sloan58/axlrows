@@ -5,18 +5,19 @@ import AppContext from "./store/AppContext";
 import {useReducer} from "react";
 import appReducer from "./store/reducer";
 import initialState from "./store/initialState";
-import Toasts from "./Components/Toasts";
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
     const [state, dispatch] =  useReducer(appReducer, initialState);
-
   return (
       <AppContext.Provider value={{state, dispatch}}>
           <Container fluid>
               <TopNav />
               <Outlet />
-              <Toasts />
+              {/*<Toasts />*/}
+              <ToastContainer />
           </Container>
       </AppContext.Provider>
   );

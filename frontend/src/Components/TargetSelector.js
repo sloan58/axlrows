@@ -3,6 +3,7 @@ import Select from "react-select";
 import {useContext, useEffect, useState} from "react";
 import {fetchWrapper} from "../util/fetchWrapper";
 import AppContext from "../store/AppContext";
+import {toast} from "react-toastify";
 
 const TargetSelector = () => {
     const { state, dispatch } = useContext(AppContext);
@@ -15,11 +16,7 @@ const TargetSelector = () => {
             })
             .catch(error => {
                 console.error(error)
-                dispatch({
-                    "type": "TOAST_SHOW_ERROR",
-                    "title": "Oops!",
-                    "message": "Sorry, there was a problem loading the UCM's"
-                })
+                toast.error("Sorry, there was a problem loading the UCM's")
             });
     }, [])
 

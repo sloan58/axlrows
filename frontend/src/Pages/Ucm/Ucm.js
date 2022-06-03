@@ -3,6 +3,7 @@ import {useContext, useEffect, useState} from "react";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import {fetchWrapper} from "../../util/fetchWrapper";
 import AppContext from "../../store/AppContext";
+import {toast} from "react-toastify";
 
 const Ucm = () => {
     const { state, dispatch } = useContext(AppContext);
@@ -27,22 +28,14 @@ const Ucm = () => {
                     ...input,
                     "password": ""
                 })
-                dispatch({
-                    "type": "TOAST_SHOW_SUCCESS",
-                    "title": "Success",
-                    "message": "Ucm Updated!"
-                })
+                toast.success("UCM Updated!")
             })
             .catch(error => {
                 console.error(error)
                 if(error.errors) {
                     setErrors(error.errors)
                 } else {
-                    dispatch({
-                        "type": "TOAST_SHOW_FAIL",
-                        "title": "Error",
-                        "message": "Ucm could not be updated"
-                    })
+                    toast.error("UCM could not be updated")
                 }
             });
     }

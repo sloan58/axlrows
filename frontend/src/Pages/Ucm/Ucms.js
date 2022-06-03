@@ -4,6 +4,7 @@ import {LinkContainer} from "react-router-bootstrap";
 import {fetchWrapper} from "../../util/fetchWrapper";
 import AppContext from "../../store/AppContext";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const Ucms = () => {
 
@@ -20,11 +21,7 @@ const Ucms = () => {
             })
             .catch(error => {
                 console.error(error)
-                dispatch({
-                    "type": "TOAST_SHOW_ERROR",
-                    "title": "Oops!",
-                    "message": "Sorry, there was a problem loading the UCM's"
-                })
+                toast.error("Sorry, there was a problem loading the UCM's")
                 setIsLoading(false)
             });
     }, [])
@@ -33,19 +30,11 @@ const Ucms = () => {
         fetchWrapper.delete(`/ucm/${ucm.id}`)
             .then(() => {
                 setUcms(ucms.filter(_ucm => _ucm.id !== ucm.id))
-                dispatch({
-                    "type": "TOAST_SHOW_SUCCESS",
-                    "title": "Success!",
-                    "message": "UCM was deleted"
-                })
+                toast.success("UCM was deleted!")
             })
             .catch(error => {
                 console.error(error)
-                dispatch({
-                    "type": "TOAST_SHOW_ERROR",
-                    "title": "Oops!",
-                    "message": "Sorry, there was a problem deleting the UCM's"
-                })
+                toast.error("Sorry, there was a problem deleting the UCM's")
             });
     }
 

@@ -5,6 +5,7 @@ import {sql} from "@codemirror/lang-sql";
 import {useContext, useState} from "react";
 import AppContext from "../store/AppContext";
 import {fetchWrapper} from "../util/fetchWrapper";
+import {toast} from "react-toastify";
 
 const QueryEditor = () => {
     const { state, dispatch } = useContext(AppContext);
@@ -25,6 +26,13 @@ const QueryEditor = () => {
         })
             .then(response => {
                 setLoading(false)
+                response.results.map(result => {
+                    console.log(result)
+                    if(result.error) {
+                        let message = `${result.target}: ${result.error}`
+                        toast.error(message)
+                    }
+                })
                 dispatch({
                     "type": "QUERY_RESULTS_UPDATED",
                     "results": response

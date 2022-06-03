@@ -71,7 +71,7 @@ class Ucm extends Model
      * @throws GuzzleException
      * @throws Exception
      */
-    private function callAxlApi($body)
+    private function callAxlApi($body): array
     {
         $client = new Client();
         try {
@@ -92,15 +92,20 @@ class Ucm extends Model
                 'error' => ''
             ];
         } catch (Exception $e) {
+            $response = $this->formatSoapResponse($e->getResponse()->getBody()->getContents());
+            $xml = new SimpleXMLElement($response);
+            $body = $xml->xpath('//soapenvFault//faultstring');
+            $message = get_object_vars($body[0])[0] ?? '';
+
             logger()->error(__METHOD__ . ": Error calling executeSQLQuery", [
                 'line' => $e->getLine(),
-                'message' => $e->getMessage(),
+                'message' => $message,
                 'ucm' => $this->id,
 //                'user' => auth()->user()->id
             ]);
             return [
                 'data' => [],
-                'error' => $e->getMessage()
+                'error' => $message
             ];
         }
     }
@@ -110,13 +115,22 @@ class Ucm extends Model
      */
     private function processAxlResponse($response)
     {
-        $response = preg_replace(
-            "/(<\/?)(\w+):([^>]*>)/",
-            "$1$2$3",
-            $response->getBody()->getContents()
-        );
+        $response = $this->formatSoapResponse($response->getBody()->getContents());
         $xml = new SimpleXMLElement($response);
         $body = $xml->xpath('//soapenvBody//nsexecuteSQLQueryResponse//return//row');
         return json_decode(json_encode((array) $body), true);
+    }
+
+    /**
+     * @param $response
+     * @return array|string|null
+     */
+    private function formatSoapResponse($response): array|string|null
+    {
+        return preg_replace(
+            "/(<\/?)(\w+):([^>]*>)/",
+            "$1$2$3",
+            $response
+        );
     }
 }
