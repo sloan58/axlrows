@@ -5,7 +5,9 @@ const initialState = {
     "pagination_length": 10,
     "pagination_start": 0,
     "pagination_end": 10,
-    "results_search": ''
+    "results_search": '',
+    "logged_in": false,
+    "user": {},
 }
 
 export default initialState

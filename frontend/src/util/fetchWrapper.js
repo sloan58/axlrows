@@ -14,6 +14,7 @@ function get(url) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
+        credentials: 'include'
     };
     return fetch(config.api.base_url + url, requestOptions).then(handleResponse);
 }

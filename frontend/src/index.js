@@ -9,6 +9,7 @@ import Ucm from "./Pages/Ucm/Ucm";
 import Query from "./Pages/Query/Query";
 import CreateUcm from "./Pages/Ucm/CreateUcm";
 import QueryHistory from "./Pages/Query/QueryHistory";
+import Login from "./Pages/Auth/Login";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +22,7 @@ root.render(
                   <Route path="/ucm/:ucmId" element={<Ucm />}/>
                   <Route path="/ucm/create" element={<CreateUcm />}/>
                   <Route path="/query-history" element={<QueryHistory />}/>
+                  <Route path="/login" element={<Login />} />
                   <Route
                       path="*"
                       element={
