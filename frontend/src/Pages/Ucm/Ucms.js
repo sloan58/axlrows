@@ -1,10 +1,10 @@
 import {Button, Col, Row, Spinner, Table} from "react-bootstrap";
 import {useContext, useEffect, useState} from "react";
 import {LinkContainer} from "react-router-bootstrap";
-import {fetchWrapper} from "../../util/fetchWrapper";
 import AppContext from "../../store/AppContext";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import {api} from "../../util/api";
 
 const Ucms = () => {
 
@@ -14,10 +14,11 @@ const Ucms = () => {
     let navigate = useNavigate();
 
     useEffect(() => {
-        fetchWrapper.get('/ucm')
+        api.get('ucm')
             .then(ucms => {
-                setUcms(ucms)
-                setIsLoading(false)
+                console.log(ucms)
+                // setUcms(ucms)
+                // setIsLoading(false)
             })
             .catch(error => {
                 console.error(error)
@@ -27,7 +28,7 @@ const Ucms = () => {
     }, [])
 
     const deleteUcm = ucm => {
-        fetchWrapper.delete(`/ucm/${ucm.id}`)
+        api.delete(`ucm/${ucm.id}`)
             .then(() => {
                 setUcms(ucms.filter(_ucm => _ucm.id !== ucm.id))
                 toast.success("UCM was deleted!")

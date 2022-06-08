@@ -1,16 +1,16 @@
 import {Col, Row} from "react-bootstrap";
 import Select from "react-select";
 import {useContext, useEffect, useState} from "react";
-import {fetchWrapper} from "../util/fetchWrapper";
 import AppContext from "../store/AppContext";
 import {toast} from "react-toastify";
+import {api} from "../util/api";
 
 const TargetSelector = () => {
     const { state, dispatch } = useContext(AppContext);
     const [ucms, setUcms] = useState([]);
 
     useEffect(() => {
-        fetchWrapper.get('/ucm')
+        api.get('ucm')
             .then(ucms => {
                 setUcms(ucms)
             })

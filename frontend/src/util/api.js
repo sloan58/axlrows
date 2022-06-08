@@ -11,26 +11,22 @@ const axiosClient = axios.create({
     }
 })
 
-// axiosClient.interceptors.response.use(function (response) {
-//     console.log(response.status)
-//     return response
-// }, function (error) {
-//     if(error.response.status === 401) {
-//         console.log('not auth')
-//         window.location.href = `${process.env.REACT_APP_BASE_HREF}/login`;
-//         //Add Logic to
-//         //1. Redirect to login page or
-//         //2. Request refresh token
-//     }
-//     if(error.response.status === 419) {
-//         console.log('yepper')
-//     }
-//     return Promise.reject(error);
-// })
-axiosClient.interceptors.response.use(
-    response => console.log('success'),
-    error => console.error('error')
-);
+axiosClient.interceptors.response.use(function (response) {
+    console.log(response.status)
+    return response
+}, function (error) {
+    if(error.response.status === 401) {
+        console.log(error.response.status)
+        window.location.href = `${process.env.REACT_APP_BASE_HREF}/login`;
+        //Add Logic to
+        //1. Redirect to login page or
+        //2. Request refresh token
+    }
+    if(error.response.status === 419) {
+        console.log(error.response.status)
+    }
+    return Promise.reject(error);
+})
 
 export const api = {
     get,

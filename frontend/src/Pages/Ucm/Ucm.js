@@ -1,8 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {Button, Col, Form, Row} from "react-bootstrap";
-import {fetchWrapper} from "../../util/fetchWrapper";
 import {toast} from "react-toastify";
+import {api} from "../../util/api";
 
 const Ucm = () => {
     let navigate = useNavigate();
@@ -13,7 +13,7 @@ const Ucm = () => {
 
 
     useEffect(() => {
-        fetchWrapper.get(`/ucm/${params.ucmId}`)
+        api.get(`ucm/${params.ucmId}`)
             .then(ucm => setInput(ucm))
             .catch(error => console.error(error));
     }, [])
@@ -21,7 +21,7 @@ const Ucm = () => {
     const handleSubmit = e => {
         e.preventDefault()
         setErrors({})
-        fetchWrapper.put(`/ucm/${params.ucmId}`, input)
+        api.put(`ucm/${params.ucmId}`, input)
             .then(() => {
                 setInput({
                     ...input,

@@ -2,8 +2,29 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import {LinkContainer} from 'react-router-bootstrap'
+import {api} from "../util/api";
 
 const TopNav = () => {
+    const login = () => {
+        api.get('csrf-cookie')
+            .then(res => {
+                api.post('login', {
+                    'email': 'test@example.com',
+                    'password': 'password'
+                })
+                    .then(res => {
+                        console.log(res)
+                    })
+                    .catch(e => console.error(e))
+            })
+            .catch(e => console.error(e))
+    }
+    const logout = () => {
+        api.post('logout').then(res => {
+            console.log('out', res)
+        })
+    }
+
     return (
         <Navbar bg="light" expand="lg">
             <Container>
@@ -19,6 +40,8 @@ const TopNav = () => {
                         <LinkContainer to="/ucm">
                             <Nav.Link>UCM's</Nav.Link>
                         </LinkContainer>
+                        <Nav.Link onClick={login}>Login</Nav.Link>
+                        <Nav.Link onClick={logout}>Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
