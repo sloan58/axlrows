@@ -4,6 +4,7 @@ import {fetchWrapper} from "../../util/fetchWrapper";
 import {toast} from "react-toastify";
 import AppContext from "../../store/AppContext";
 import {useNavigate} from "react-router-dom";
+import {api} from "../../util/api";
 
 const QueryHistory = () => {
     const [isLoading, setIsLoading] = useState(true)
@@ -12,9 +13,9 @@ const QueryHistory = () => {
     let navigate = useNavigate();
 
     useEffect(() => {
-        fetchWrapper.get('/me')
-            .then(me => {
-                setMe(me)
+        api.get('user')
+            .then(({ data }) => {
+                setMe(data)
                 setIsLoading(false)
             })
             .catch(error => {

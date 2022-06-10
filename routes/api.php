@@ -16,18 +16,11 @@ use App\Http\Controllers\Api\QueryController;
 |
 */
 
-Route::get('/me', function() {
-    return \App\Models\User::first();
-});
-Route::resource('/query', QueryController::class)->only(['store', 'update', 'destroy']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::resource('/query', QueryController::class)->only(['store', 'update', 'destroy']);
     Route::resource('/ucm', UcmController::class)->except(['create', 'edit']);
-    Route::get('/test', function() {
-        return ['status' => 'success'];
+    Route::get('/user', function() {
+        return request()->user();
     });
-});
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });

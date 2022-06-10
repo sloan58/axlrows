@@ -58,6 +58,16 @@ const appReducer = (state, action) => {
                 ...state,
                 "results_search": action.search
             }
+        case 'LOGIN':
+            return {
+                ...state,
+                "logged_in": true
+            }
+        case 'LOGOUT':
+            return {
+                ...state,
+                "logged_in": false
+            }
         default:
             throw new Error();
     }

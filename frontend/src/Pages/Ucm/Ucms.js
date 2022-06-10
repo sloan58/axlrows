@@ -15,10 +15,9 @@ const Ucms = () => {
 
     useEffect(() => {
         api.get('ucm')
-            .then(ucms => {
-                console.log(ucms)
-                // setUcms(ucms)
-                // setIsLoading(false)
+            .then(({ data }) => {
+                setUcms(data)
+                setIsLoading(false)
             })
             .catch(error => {
                 console.error(error)

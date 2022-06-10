@@ -14,7 +14,7 @@ const Ucm = () => {
 
     useEffect(() => {
         api.get(`ucm/${params.ucmId}`)
-            .then(ucm => setInput(ucm))
+            .then(({ data }) => setInput(data))
             .catch(error => console.error(error));
     }, [])
 

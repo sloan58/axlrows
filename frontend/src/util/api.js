@@ -3,7 +3,6 @@ import config from './config.json'
 
 const axiosClient = axios.create({
     baseURL: config.api.base_url,
-    timeout: 1500,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',
@@ -15,16 +14,15 @@ axiosClient.interceptors.response.use(function (response) {
     console.log(response.status)
     return response
 }, function (error) {
-    if(error.response.status === 401) {
-        console.log(error.response.status)
-        window.location.href = `${process.env.REACT_APP_BASE_HREF}/login`;
-        //Add Logic to
-        //1. Redirect to login page or
-        //2. Request refresh token
+    if (error.code === "ECONNABORTED" ) {
+        console.log('yep')
+    } else {
+        if(error.response.status === 401) {
+            console.log(error.response.status)
+            window.location.href = `/login`;
+        }
     }
-    if(error.response.status === 419) {
-        console.log(error.response.status)
-    }
+
     return Promise.reject(error);
 })
 

@@ -1,9 +1,9 @@
 import {useContext, useState} from "react";
 import AppContext from "../../store/AppContext";
 import {useNavigate} from "react-router-dom";
-import {fetchWrapper} from "../../util/fetchWrapper";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import {toast} from 'react-toastify';
+import {api} from "../../util/api";
 
 const CreateUcm = () => {
     let navigate = useNavigate();
@@ -15,7 +15,7 @@ const CreateUcm = () => {
     const handleSubmit = e => {
         e.preventDefault()
         setErrors({})
-        fetchWrapper.post("/ucm", input)
+        api.post("ucm", input)
             .then(() => {
                 toast.success("UCM Created!")
                 navigate('/ucm')

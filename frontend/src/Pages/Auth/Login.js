@@ -1,6 +1,10 @@
 const Login = () => {
     return (
-        <h1>Login</h1>
+        <div className="row text-center text-primary mt-5">
+            <div className="col">
+                <h1>Please Login</h1>
+            </div>
+        </div>
     )
 }
 

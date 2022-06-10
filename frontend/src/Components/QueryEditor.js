@@ -6,6 +6,7 @@ import {useContext, useState} from "react";
 import AppContext from "../store/AppContext";
 import {fetchWrapper} from "../util/fetchWrapper";
 import {toast} from "react-toastify";
+import {api} from "../util/api";
 
 const QueryEditor = () => {
     const { state, dispatch } = useContext(AppContext);
@@ -20,14 +21,13 @@ const QueryEditor = () => {
         dispatch({
             "type": "PAGINATION_RESET"
         })
-        fetchWrapper.post('/query', {
+        api.post('query', {
             "statement": state.query_statement,
             "targets": state.query_targets
         })
-            .then(response => {
+            .then(({ data }) => {
                 setLoading(false)
-                response.results.map(result => {
-                    console.log(result)
+                data.results.map(result => {
                     if(result.error) {
                         let message = `${result.target}: ${result.error}`
                         toast.error(message, {
@@ -37,9 +37,9 @@ const QueryEditor = () => {
                 })
                 dispatch({
                     "type": "QUERY_RESULTS_UPDATED",
-                    "results": response
+                    "results": data
                 })
-                console.log(response)
+                console.log(data)
             })
             .catch(error => {
                 setLoading(false)

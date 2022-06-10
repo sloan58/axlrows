@@ -7,6 +7,7 @@ use SimpleXMLElement;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ucm extends Model
@@ -90,6 +91,15 @@ class Ucm extends Model
             return [
                 'data' => $response,
                 'error' => ''
+            ];
+        } catch(ConnectException $e) {
+            logger()->error(__METHOD__ . ": Received Guzzle Connect Exception", [
+                'message' => $e->getMessage(),
+                'line' => $e->getLine()
+            ]);
+            return [
+                'data' => [],
+                'error' => 'Could not connect'
             ];
         } catch (Exception $e) {
             $response = $this->formatSoapResponse($e->getResponse()->getBody()->getContents());

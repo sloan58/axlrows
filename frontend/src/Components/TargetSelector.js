@@ -11,8 +11,8 @@ const TargetSelector = () => {
 
     useEffect(() => {
         api.get('ucm')
-            .then(ucms => {
-                setUcms(ucms)
+            .then(({data}) => {
+                setUcms(data)
             })
             .catch(error => {
                 console.error(error)

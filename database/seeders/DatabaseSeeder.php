@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
          \App\Models\User::factory()->create([
              'name' => 'Test User',
              'email' => 'test@example.com',
+             'password' => \Hash::make('secret')
          ])->each(function($user) {
              \App\Models\Query::factory(10)->create([
                  'user_id' => $user->id
