@@ -4,7 +4,6 @@ import {oneDark} from "@codemirror/theme-one-dark";
 import {sql} from "@codemirror/lang-sql";
 import {useContext, useState} from "react";
 import AppContext from "../store/AppContext";
-import {fetchWrapper} from "../util/fetchWrapper";
 import {toast} from "react-toastify";
 import {api} from "../util/api";
 

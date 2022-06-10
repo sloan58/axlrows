@@ -10,6 +10,7 @@ import Query from "./Pages/Query/Query";
 import CreateUcm from "./Pages/Ucm/CreateUcm";
 import QueryHistory from "./Pages/Query/QueryHistory";
 import Login from "./Pages/Auth/Login";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,11 +18,13 @@ root.render(
       <BrowserRouter>
           <Routes>
               <Route path="/" element={<App />}>
-                  <Route index element={<Query />} />
-                  <Route path="/ucm" element={<Ucms />} />
-                  <Route path="/ucm/:ucmId" element={<Ucm />}/>
-                  <Route path="/ucm/create" element={<CreateUcm />}/>
-                  <Route path="/query-history" element={<QueryHistory />}/>
+                  <Route element={<ProtectedRoute />}>
+                      <Route index element={<Query />}></Route>
+                      <Route path="/ucm" element={<Ucms />} />
+                      <Route path="/ucm/:ucmId" element={<Ucm />}/>
+                      <Route path="/ucm/create" element={<CreateUcm />}/>
+                      <Route path="/query-history" element={<QueryHistory />}/>
+                  </Route>
                   <Route path="/login" element={<Login />} />
                   <Route
                       path="*"

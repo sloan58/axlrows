@@ -1,6 +1,5 @@
 import {Button, Col, Row, Spinner, Table} from "react-bootstrap";
 import {useContext, useEffect, useState} from "react";
-import {fetchWrapper} from "../../util/fetchWrapper";
 import {toast} from "react-toastify";
 import AppContext from "../../store/AppContext";
 import {useNavigate} from "react-router-dom";
@@ -35,7 +34,7 @@ const QueryHistory = () => {
 
     const toggleFavorite = query => {
         query.favorite = !query.favorite
-        fetchWrapper.put(`/query/${query.id}`, query)
+        api.put(`query/${query.id}`, query)
             .then(() => {
                 setMe({
                     ...me,
@@ -50,7 +49,7 @@ const QueryHistory = () => {
     }
 
     const deleteQuery = query => {
-        fetchWrapper.delete(`/query/${query.id}`)
+        api.delete(`query/${query.id}`)
             .then(() => {
                 setMe({
                     ...me,
