@@ -18,6 +18,7 @@ const TopNav = () => {
                 'password': 'secret'
             })
             .then(() => {
+                localStorage.setItem('axlrows_logged_in', true)
                 dispatch({
                     'type': 'LOGIN'
                 })
@@ -33,12 +34,14 @@ const TopNav = () => {
     const logout = () => {
         api.post('logout')
         .then(res => {
+            localStorage.removeItem('axlrows_logged_in')
             dispatch({
                 'type': 'LOGOUT'
             })
             navigate('/login')
         })
         .catch(e => {
+            localStorage.removeItem('axlrows_logged_in')
             dispatch({
                 'type': 'LOGOUT'
             })

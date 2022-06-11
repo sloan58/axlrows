@@ -6,7 +6,7 @@ const initialState = {
     "pagination_start": 0,
     "pagination_end": 10,
     "results_search": '',
-    "logged_in": false,
+    "logged_in": localStorage.getItem('axlrows_logged_in'),
     "user": {},
 }
 
