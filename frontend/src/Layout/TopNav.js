@@ -1,9 +1,5 @@
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import {LinkContainer} from 'react-router-bootstrap'
 import {api} from "../util/api";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useContext} from "react";
 import AppContext from "../store/AppContext";
 
@@ -18,7 +14,7 @@ const TopNav = () => {
                 'password': 'secret'
             })
             .then(() => {
-                localStorage.setItem('axlrows_logged_in', true)
+                localStorage.setItem('axlrows_logged_in', 'true')
                 dispatch({
                     'type': 'LOGIN'
                 })
@@ -50,33 +46,42 @@ const TopNav = () => {
     }
 
     return (
-        <Navbar bg="light" expand="lg">
-            <Container>
-                <LinkContainer to={state.logged_in ? '/' : '/login'}>
-                    <Navbar.Brand>AXL Rows</Navbar.Brand>
-                </LinkContainer>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+        <div className="navbar bg-base-100">
+            <div className="navbar-start">
+                <div className="dropdown">
+                    <label tabIndex="0" className="btn btn-ghost lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                                  d="M4 6h16M4 12h8m-8 6h16"/>
+                        </svg>
+                    </label>
                     {state.logged_in && (
-                        <Nav className="me-auto">
-                            <LinkContainer to="/query-history">
-                                <Nav.Link>Query History</Nav.Link>
-                            </LinkContainer>
-                            <LinkContainer to="/ucm">
-                                <Nav.Link>UCM's</Nav.Link>
-                            </LinkContainer>
-                        </Nav>
+                        <ul tabIndex="0"
+                            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                            <li><a>Query History</a></li>
+                            <li><a>UCM</a></li>
+                        </ul>
                     )}
-                    <Nav className="ms-auto">
-                        {state.logged_in ? (
-                            <Nav.Link onClick={logout}>Logout</Nav.Link>
-                        ) : (
-                            <Nav.Link onClick={login}>Login</Nav.Link>
-                        )}
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
+                </div>
+                <div className="mr-4 normal-case text-xl">AXL Rows</div>
+                {state.logged_in && (
+                    <div className="hidden lg:flex">
+                        <ul className="menu menu-horizontal p-0">
+                            <li className="pr-2"><NavLink to="/query-history">Query History</NavLink></li>
+                            <li className="pr-2"><NavLink to="/ucm">Ucm</NavLink></li>
+                        </ul>
+                    </div>
+                )}
+            </div>
+            <div className="navbar-end">
+                {state.logged_in ? (
+                    <a onClick={logout} className="btn">Logout</a>
+                ) : (
+                    <a onClick={login} className="btn">Login</a>
+                )}
+            </div>
+        </div>
     )
 }
 

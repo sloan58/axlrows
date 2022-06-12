@@ -16,8 +16,8 @@ function App() {
       <AppContext.Provider value={{state, dispatch}}>
           <Container fluid>
               <TopNav />
-              <Outlet />
-              <ToastContainer />
+              {/*<Outlet />*/}
+              {/*<ToastContainer />*/}
           </Container>
       </AppContext.Provider>
   );
