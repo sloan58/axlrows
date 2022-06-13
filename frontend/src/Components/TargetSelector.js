@@ -4,10 +4,12 @@ import {useContext, useEffect, useState} from "react";
 import AppContext from "../store/AppContext";
 import {toast} from "react-toastify";
 import {api} from "../util/api";
+import {useNavigate} from "react-router-dom";
 
 const TargetSelector = () => {
     const { state, dispatch } = useContext(AppContext);
     const [ucms, setUcms] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         api.get('ucm')
@@ -16,6 +18,12 @@ const TargetSelector = () => {
             })
             .catch(error => {
                 console.error(error)
+                if(error.response.status === 401) {
+                    dispatch({
+                        'type': 'LOGOUT'
+                    })
+                    navigate(`/login`);
+                }
                 toast.error("Sorry, there was a problem loading the UCM's")
             });
     }, [])

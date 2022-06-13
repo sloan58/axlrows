@@ -19,8 +19,14 @@ const QueryHistory = () => {
             })
             .catch(error => {
                 console.error(error)
-                toast.error("Sorry, there was a problem loading the query history")
                 setIsLoading(false)
+                if(error.response.status === 401) {
+                    dispatch({
+                        'type': 'LOGOUT'
+                    })
+                    navigate(`/login`);
+                }
+                toast.error("Sorry, there was a problem loading the query history")
             });
     }, [])
 

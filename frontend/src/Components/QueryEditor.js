@@ -6,10 +6,12 @@ import {useContext, useState} from "react";
 import AppContext from "../store/AppContext";
 import {toast} from "react-toastify";
 import {api} from "../util/api";
+import {useNavigate} from "react-router-dom";
 
 const QueryEditor = () => {
     const { state, dispatch } = useContext(AppContext);
     const [isLoading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = () => {
         setLoading(true)
@@ -43,6 +45,12 @@ const QueryEditor = () => {
             .catch(error => {
                 setLoading(false)
                 console.error(error)
+                if(error.response.status === 401) {
+                    dispatch({
+                        'type': 'LOGOUT'
+                    })
+                    navigate(`/login`);
+                }
             });
     }
 

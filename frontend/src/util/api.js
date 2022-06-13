@@ -14,14 +14,14 @@ axiosClient.interceptors.response.use(function (response) {
     console.log(response.status)
     return response
 }, function (error) {
-    if (error.code === "ECONNABORTED" ) {
-        console.log('yep')
-    } else {
-        if(error.response.status === 401) {
-            console.log(error.response.status)
-            window.location.href = `/login`;
-        }
-    }
+    // if (error.code === "ECONNABORTED" ) {
+    //     console.log('ECONNABORTED')
+    // } else {
+    //     if(error.response.status === 401) {
+    //         console.log(error.response.status)
+    //         window.location.href = `/login`;
+    //     }
+    // }
 
     return Promise.reject(error);
 })

@@ -20,7 +20,14 @@ const TopNav = () => {
                 })
                 navigate('/')
             })
-            .catch(e => console.error(e))
+            .catch(error => {
+                if(error.response.status === 401) {
+                    dispatch({
+                        'type': 'LOGOUT'
+                    })
+                    navigate(`/login`);
+                }
+            })
         })
         .catch(e =>
             console.error('no cookie for you!', e)

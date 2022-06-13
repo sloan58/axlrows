@@ -3,11 +3,14 @@ import {useEffect, useState} from "react";
 import {Button, Col, Form, Row} from "react-bootstrap";
 import {toast} from "react-toastify";
 import {api} from "../../util/api";
+import {useContext} from "react";
+import AppContext from "../../store/AppContext";
 
 const Ucm = () => {
     let navigate = useNavigate();
-
     let params = useParams();
+    const { state, dispatch } = useContext(AppContext);
+
     const [input, setInput] = useState({});
     const [ errors, setErrors ] = useState({})
 
@@ -31,10 +34,17 @@ const Ucm = () => {
             })
             .catch(error => {
                 console.error(error)
-                if(error.errors) {
-                    setErrors(error.errors)
+                if(error.response.status === 401) {
+                    dispatch({
+                        'type': 'LOGOUT'
+                    })
+                    navigate(`/login`);
                 } else {
-                    toast.error("UCM could not be updated")
+                    if(error.errors) {
+                        setErrors(error.errors)
+                    } else {
+                        toast.error("UCM could not be updated")
+                    }
                 }
             });
     }

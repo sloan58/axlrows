@@ -9,7 +9,7 @@ const CreateUcm = () => {
     let navigate = useNavigate();
     const [input, setInput] = useState({});
     const [ errors, setErrors ] = useState({})
-    const { state, dispatch } = useContext(AppContext);
+    const { dispatch } = useContext(AppContext);
 
 
     const handleSubmit = e => {
@@ -22,15 +22,22 @@ const CreateUcm = () => {
             })
             .catch(error => {
                 console.error(error)
-                if(error.errors) {
-                    setErrors(error.errors)
-                } else {
-                    toast.error("There was a problem creating the UCM!")
+                if(error.response.status === 401) {
                     dispatch({
-                        "type": "TOAST_SHOW_FAIL",
-                        "title": "Error!",
-                        "message": "There was a problem creating the UCM"
+                        'type': 'LOGOUT'
                     })
+                    navigate(`/login`);
+                } else {
+                    if(error.errors) {
+                        setErrors(error.errors)
+                    } else {
+                        toast.error("There was a problem creating the UCM!")
+                        dispatch({
+                            "type": "TOAST_SHOW_FAIL",
+                            "title": "Error!",
+                            "message": "There was a problem creating the UCM"
+                        })
+                    }
                 }
             });
     }
