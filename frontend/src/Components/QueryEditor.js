@@ -48,8 +48,8 @@ const QueryEditor = () => {
 
     return (
         <>
-            <Row className="justify-content-md-center mt-3">
-                <Col xs={12} md={10} lg={8}>
+            <div className="grid grid-cols-8 gap-4">
+                <div className="col-start-3 col-span-4 mt-4">
                     <CodeMirror
                         value={state.query_statement}
                         width="100%"
@@ -63,19 +63,18 @@ const QueryEditor = () => {
                             "statement": value
                         })}
                     />
-                </Col>
-            </Row>
-            <Row className="justify-content-md-center mt-2">
-                <Col xs={12} md={10} lg={8}>
-                    <Button
-                        variant={!isLoading ? 'primary' : 'outline-primary'}
+                </div>
+            </div>
+            <div className="grid grid-cols-4 gap-4">
+                <div className="col-start-2 col-span-2 mt-2">
+                    <button className={isLoading ? 'btn btn-outline' : 'btn'}
                         disabled={isLoading || state.query_targets.length === 0 || !state.query_statement}
                         onClick={!isLoading ? handleSubmit : null}
                     >
                         {isLoading ? 'Loading…' : 'Submit'}
-                    </Button>
-                </Col>
-            </Row>
+                    </button>
+                </div>
+            </div>
         </>
     )
 }

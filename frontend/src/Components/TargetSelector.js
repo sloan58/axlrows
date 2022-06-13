@@ -21,8 +21,8 @@ const TargetSelector = () => {
     }, [])
 
     return (
-        <Row className="justify-content-md-center mt-5">
-            <Col xs={12} md={10} lg={8}>
+        <div className="grid grid-cols-3 gap-4">
+            <div className="col-start-2 col-span-1 mt-4">
                 <Select
                     placeholder='Select Query Targets...'
                     closeMenuOnSelect={false}
@@ -36,8 +36,8 @@ const TargetSelector = () => {
                         "targets": e ? e : []
                     })}
                 />
-            </Col>
-        </Row>
+            </div>
+        </div>
     )
 }
 

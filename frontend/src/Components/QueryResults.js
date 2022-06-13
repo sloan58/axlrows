@@ -88,88 +88,169 @@ const QueryResults = () => {
         <>
             {state.query_results.totalRows >= 1 && (
                 <>
-                    <Row className="justify-content-md-center mt-5">
-                        <Col xs={10}>
-                            <Row className="justify-content-md-center">
-                                <Col className="text-start">
-                                    <Form.Control onChange={updateSearch} type="email" placeholder={state.results_search === '' ? 'Search' : state.results_search} />
-                                </Col>
-                                <Col className="d-inline-flex justify-content-end">
-                                    {state.query_results.totalRows !== 0 && (
-                                        downloading === true ? (
-                                                <Spinner animation="border" role="status" className="text-success">
-                                                    <span className="visually-hidden">Loading...</span>
-                                                </Spinner>
-                                            ) : (
-                                                <div onClick={() => setDownloading(true)} className="mt-2 me-2 text-success" style={{cursor: 'pointer'}}>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
-                                                         className="bi bi-download" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                                        <path
-                                                            d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                                    </svg>
-                                                </div>
-                                            )
-                                    )}
-                                    <DropdownButton title={state.pagination_length} id="bg-vertical-dropdown-1" className="ms-3">
-                                        <Dropdown.Item onClick={() => onSelect(10)}>10</Dropdown.Item>
-                                        <Dropdown.Item onClick={() => onSelect(25)}>25</Dropdown.Item>
-                                        <Dropdown.Item onClick={() => onSelect(50)}>50</Dropdown.Item>
-                                    </DropdownButton>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                    <Row className="justify-content-md-center mt-3">
-                        <Col xs={10}>
-                            <Table striped bordered hover responsive>
-                                <thead>
-                                <tr>
-                                    {state.query_results.columns.map((column, index) => {
-                                        return (
-                                            <th key={index}>{column}</th>
-                                        )
-                                    })}
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {state.query_results.results.map(ucm => {
-                                    return ucm.data.slice(state.pagination_start, state.pagination_end).map((row, index) => {
-                                        if([].concat(...Object.values(row)).join(' ').toLowerCase().includes(state.results_search.toLowerCase())) {
+                    <div className="grid grid-cols-12 gap-4 mt-8">
+                        <div className="col-start-2 col-span-9 mt-2">
+                            <input
+                                type="text"
+                                className="input input-bordered w-full max-w-xs"
+                                onChange={updateSearch}
+                                placeholder={state.results_search === '' ? 'Search' : state.results_search}
+                            />
+                        </div>
+                        <div className="col-span-2">
+                            <div className="dropdown">
+                                <label tabIndex="0" className="btn m-1">
+                                    {state.pagination_length} Rows
+                                    <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20"
+                                         height="20" viewBox="0 0 24 24">
+                                        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+                                    </svg>
+                                </label>
+                                <ul tabIndex="0"
+                                    className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                    <li onClick={() => onSelect(10)}><a>10</a></li>
+                                    <li onClick={() => onSelect(25)}><a>25</a></li>
+                                    <li onClick={() => onSelect(50)}><a>50</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-12 gap-4 mt-2">
+                        <div className="col-start-2 col-span-10 mt-2">
+                            <div className="overflow-x-auto">
+                                <table className="table table-compact w-full">
+                                    <thead>
+                                    <tr>
+                                        {state.query_results.columns.map((column, index) => {
                                             return (
-                                                <tr key={index}>
-                                                    {state.query_results.columns.map((column, index) => {
-                                                        return (
-                                                            <td key={index}>{row[column]}</td>
-                                                        )
-                                                    })}
-                                                </tr>
+                                                <th key={index}>{column}</th>
                                             )
-                                        }
-                                    })
-                                })}
-                                </tbody>
-                            </Table>
-                        </Col>
-                    </Row>
-                    <Row className="justify-content-md-center mt-3">
-                        <Col xs={5}>
+                                        })}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {state.query_results.results.map(ucm => {
+                                        return ucm.data.slice(state.pagination_start, state.pagination_end).map((row, index) => {
+                                            if([].concat(...Object.values(row)).join(' ').toLowerCase().includes(state.results_search.toLowerCase())) {
+                                                return (
+                                                    <tr key={index}>
+                                                        {state.query_results.columns.map((column, index) => {
+                                                            return (
+                                                                <td key={index}>{row[column]}</td>
+                                                            )
+                                                        })}
+                                                    </tr>
+                                                )
+                                            }
+                                        })
+                                    })}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        {state.query_results.columns.map((column, index) => {
+                                            return (
+                                                <th key={index}>{column}</th>
+                                            )
+                                        })}
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-12 gap-4 mt-4 mb-16">
+                        <div className="col-start-2 col-span-3">
                             <p>{state.pagination_start + 1} through {state.pagination_end > state.query_results.totalRows ? state.query_results.totalRows : state.pagination_end} of {state.query_results.totalRows} Total Records</p>
-                        </Col>
-                        <Col xs={5}>
-                            {shouldShowPagination() &&
-                                (
-                                    <Pagination className="float-end">
-                                        <Pagination.First onClick={gotoPaginationStart} disabled={!canDecrementPagination()}/>
-                                        <Pagination.Prev onClick={prevPage} disabled={!canDecrementPagination()}/>
-                                        <Pagination.Next onClick={nextPage} disabled={!canIncrementPagination()}/>
-                                        <Pagination.Last onClick={gotoPaginationEnd} disabled={!canIncrementPagination()}/>
-                                    </Pagination>
-                                )
-                            }
-                        </Col>
-                    </Row>
+                        </div>
+                        <div className="col-start-10 col-span-2">
+                            <div className="btn-group grid grid-cols-2">
+                                <button onClick={prevPage} disabled={!canDecrementPagination()} className="btn btn-outline">Previous page</button>
+                                <button onClick={nextPage} disabled={!canIncrementPagination()} className="btn btn-outline">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    {/*<Row className="justify-content-md-center mt-5">*/}
+                    {/*    <Col xs={10}>*/}
+                    {/*        <Row className="justify-content-md-center">*/}
+                    {/*            <Col className="text-start">*/}
+                    {/*                <Form.Control onChange={updateSearch} type="email" placeholder={state.results_search === '' ? 'Search' : state.results_search} />*/}
+                    {/*            </Col>*/}
+                    {/*            <Col className="d-inline-flex justify-content-end">*/}
+                    {/*                {state.query_results.totalRows !== 0 && (*/}
+                    {/*                    downloading === true ? (*/}
+                    {/*                            <Spinner animation="border" role="status" className="text-success">*/}
+                    {/*                                <span className="visually-hidden">Loading...</span>*/}
+                    {/*                            </Spinner>*/}
+                    {/*                        ) : (*/}
+                    {/*                            <div onClick={() => setDownloading(true)} className="mt-2 me-2 text-success" style={{cursor: 'pointer'}}>*/}
+                    {/*                                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"*/}
+                    {/*                                     className="bi bi-download" viewBox="0 0 16 16">*/}
+                    {/*                                    <path*/}
+                    {/*                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>*/}
+                    {/*                                    <path*/}
+                    {/*                                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>*/}
+                    {/*                                </svg>*/}
+                    {/*                            </div>*/}
+                    {/*                        )*/}
+                    {/*                )}*/}
+                    {/*                <DropdownButton title={state.pagination_length} id="bg-vertical-dropdown-1" className="ms-3">*/}
+                    {/*                    <Dropdown.Item onClick={() => onSelect(10)}>10</Dropdown.Item>*/}
+                    {/*                    <Dropdown.Item onClick={() => onSelect(25)}>25</Dropdown.Item>*/}
+                    {/*                    <Dropdown.Item onClick={() => onSelect(50)}>50</Dropdown.Item>*/}
+                    {/*                </DropdownButton>*/}
+                    {/*            </Col>*/}
+                    {/*        </Row>*/}
+                    {/*    </Col>*/}
+                    {/*</Row>*/}
+                    {/*<Row className="justify-content-md-center mt-3">*/}
+                    {/*    <Col xs={10}>*/}
+                    {/*        <Table striped bordered hover responsive>*/}
+                    {/*            <thead>*/}
+                    {/*            <tr>*/}
+                    {/*                {state.query_results.columns.map((column, index) => {*/}
+                    {/*                    return (*/}
+                    {/*                        <th key={index}>{column}</th>*/}
+                    {/*                    )*/}
+                    {/*                })}*/}
+                    {/*            </tr>*/}
+                    {/*            </thead>*/}
+                    {/*            <tbody>*/}
+                    {/*            {state.query_results.results.map(ucm => {*/}
+                    {/*                return ucm.data.slice(state.pagination_start, state.pagination_end).map((row, index) => {*/}
+                    {/*                    if([].concat(...Object.values(row)).join(' ').toLowerCase().includes(state.results_search.toLowerCase())) {*/}
+                    {/*                        return (*/}
+                    {/*                            <tr key={index}>*/}
+                    {/*                                {state.query_results.columns.map((column, index) => {*/}
+                    {/*                                    return (*/}
+                    {/*                                        <td key={index}>{row[column]}</td>*/}
+                    {/*                                    )*/}
+                    {/*                                })}*/}
+                    {/*                            </tr>*/}
+                    {/*                        )*/}
+                    {/*                    }*/}
+                    {/*                })*/}
+                    {/*            })}*/}
+                    {/*            </tbody>*/}
+                    {/*        </Table>*/}
+                    {/*    </Col>*/}
+                    {/*</Row>*/}
+                    {/*<Row className="justify-content-md-center mt-3">*/}
+                    {/*    <Col xs={5}>*/}
+                    {/*        <p>{state.pagination_start + 1} through {state.pagination_end > state.query_results.totalRows ? state.query_results.totalRows : state.pagination_end} of {state.query_results.totalRows} Total Records</p>*/}
+                    {/*    </Col>*/}
+                    {/*    <Col xs={5}>*/}
+                    {/*        {shouldShowPagination() &&*/}
+                    {/*            (*/}
+                    {/*                <Pagination className="float-end">*/}
+                    {/*                    <Pagination.First onClick={gotoPaginationStart} disabled={!canDecrementPagination()}/>*/}
+                    {/*                    <Pagination.Prev onClick={prevPage} disabled={!canDecrementPagination()}/>*/}
+                    {/*                    <Pagination.Next onClick={nextPage} disabled={!canIncrementPagination()}/>*/}
+                    {/*                    <Pagination.Last onClick={gotoPaginationEnd} disabled={!canIncrementPagination()}/>*/}
+                    {/*                </Pagination>*/}
+                    {/*            )*/}
+                    {/*        }*/}
+                    {/*    </Col>*/}
+                    {/*</Row>*/}
                 </>
             )}
         </>

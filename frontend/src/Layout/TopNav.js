@@ -68,6 +68,7 @@ const TopNav = () => {
                 {state.logged_in && (
                     <div className="hidden lg:flex">
                         <ul className="menu menu-horizontal p-0">
+                            <li className="pr-2"><NavLink to="/">Home</NavLink></li>
                             <li className="pr-2"><NavLink to="/query-history">Query History</NavLink></li>
                             <li className="pr-2"><NavLink to="/ucm">Ucm</NavLink></li>
                         </ul>
