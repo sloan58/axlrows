@@ -71,7 +71,7 @@ const TopNav = () => {
                         </ul>
                     )}
                 </div>
-                <div className="mr-4 normal-case text-xl">AXL Rows</div>
+                <div className="mr-4 normal-case text-md md:text-xl">AXL Rows</div>
                 {state.logged_in && (
                     <div className="hidden lg:flex">
                         <ul className="menu menu-horizontal p-0">
@@ -84,9 +84,15 @@ const TopNav = () => {
             </div>
             <div className="navbar-end">
                 {state.logged_in ? (
-                    <a onClick={logout} className="btn">Logout</a>
+                    <>
+                        <a onClick={logout} className="hidden md:inline-flex btn">Logout</a>
+                        <a onClick={logout} className="md:hidden btn btn-sm">Logout</a>
+                    </>
                 ) : (
-                    <a onClick={login} className="btn">Login</a>
+                    <>
+                        <a onClick={login} className="hidden md:inline-flex btn">Login</a>
+                        <a onClick={login} className="md:hidden btn btn-sm">Login</a>
+                    </>
                 )}
             </div>
         </div>

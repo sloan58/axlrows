@@ -29,8 +29,8 @@ const TargetSelector = () => {
     }, [])
 
     return (
-        <div className="grid grid-cols-3 gap-4">
-            <div className="col-start-2 col-span-1 mt-4">
+        <div className="grid grid-cols-12 md:grid-cols-4 gap-4 mx-4 md:mx-0">
+            <div className="col-start1 col-span-12 md:col-start-2 md:col-span-2 mt-4">
                 <Select
                     placeholder='Select Query Targets...'
                     closeMenuOnSelect={false}

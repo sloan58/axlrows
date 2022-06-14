@@ -89,36 +89,39 @@ const QueryResults = () => {
         <>
             {state.query_results.totalRows >= 1 && (
                 <>
-                    <div className="grid grid-cols-12 gap-4 mt-8">
-                        <div className="col-start-2 col-span-9 mt-2">
-                            <input
-                                type="text"
-                                className="input input-bordered w-full max-w-xs"
-                                onChange={updateSearch}
-                                placeholder={state.results_search === '' ? 'Search' : state.results_search}
-                            />
-                        </div>
-                        <div className="col-span-2">
-                            <div className="dropdown">
-                                <label tabIndex="0" className="btn m-1">
-                                    {state.pagination_length} Rows
-                                    <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20"
-                                         height="20" viewBox="0 0 24 24">
-                                        <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
-                                    </svg>
-                                </label>
-                                <ul tabIndex="0"
-                                    className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                                    <li onClick={() => onSelect(10)}><a>10</a></li>
-                                    <li onClick={() => onSelect(25)}><a>25</a></li>
-                                    <li onClick={() => onSelect(50)}><a>50</a></li>
-                                </ul>
+                    <div className="grid grid-cols-12 md:grid-cols-10 mb-16 mx-4 md:mx-0">
+                        <div className="col-start-1 col-span-12 lg:col-start-2 lg:col-span-8">
+                            <div className="flex justify-between mt-4">
+                                <input
+                                    type="text"
+                                    className="input input-bordered md:w-1/3"
+                                    onChange={updateSearch}
+                                    placeholder={state.results_search === '' ? 'Search' : state.results_search}
+                                />
+                                <div className="dropdown text-right">
+                                    <label tabIndex="0" className="md:hidden btn">
+                                        {state.pagination_length}
+                                        <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20"
+                                             height="20" viewBox="0 0 24 24">
+                                            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+                                        </svg>
+                                    </label>
+                                    <label tabIndex="0" className="hidden md:inline-flex btn">
+                                        {state.pagination_length} Rows
+                                        <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20"
+                                             height="20" viewBox="0 0 24 24">
+                                            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"/>
+                                        </svg>
+                                    </label>
+                                    <ul tabIndex="0"
+                                        className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
+                                        <li onClick={() => onSelect(10)}><a>10</a></li>
+                                        <li onClick={() => onSelect(25)}><a>25</a></li>
+                                        <li onClick={() => onSelect(50)}><a>50</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-12 gap-4 mt-2">
-                        <div className="col-start-2 col-span-10 mt-2">
-                            <div className="overflow-x-auto">
+                            <div className="overflow-x-auto mt-4">
                                 <table className="table table-compact w-full">
                                     <thead>
                                     <tr>
@@ -157,16 +160,19 @@ const QueryResults = () => {
                                     </tfoot>
                                 </table>
                             </div>
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-12 gap-4 mt-4 mb-16">
-                        <div className="col-start-2 col-span-3">
-                            <p>{state.pagination_start + 1} through {state.pagination_end > state.query_results.totalRows ? state.query_results.totalRows : state.pagination_end} of {state.query_results.totalRows} Total Records</p>
-                        </div>
-                        <div className="col-start-10 col-span-2">
-                            <div className="btn-group grid grid-cols-2">
-                                <button onClick={prevPage} disabled={!canDecrementPagination()} className="btn btn-outline">Previous page</button>
-                                <button onClick={nextPage} disabled={!canIncrementPagination()} className="btn btn-outline">Next</button>
+                            <div className="md:hidden flex justify-between mt-4">
+                                <p>{state.pagination_start + 1} - {state.pagination_end > state.query_results.totalRows ? state.query_results.totalRows : state.pagination_end} of {state.query_results.totalRows}</p>
+                                <div className="btn-group">
+                                    <button onClick={prevPage} disabled={!canDecrementPagination()} className="btn btn-outline">{"<<"}</button>
+                                    <button onClick={nextPage} disabled={!canIncrementPagination()} className="btn btn-outline">{">>"}</button>
+                                </div>
+                            </div>
+                            <div className="hidden md:flex justify-between mt-4">
+                                <p>{state.pagination_start + 1} through {state.pagination_end > state.query_results.totalRows ? state.query_results.totalRows : state.pagination_end} of {state.query_results.totalRows} Total Records</p>
+                                <div className="btn-group">
+                                    <button onClick={prevPage} disabled={!canDecrementPagination()} className="btn btn-outline">Previous page</button>
+                                    <button onClick={nextPage} disabled={!canIncrementPagination()} className="btn btn-outline">Next page</button>
+                                </div>
                             </div>
                         </div>
                     </div>

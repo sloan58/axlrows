@@ -56,8 +56,8 @@ const QueryEditor = () => {
 
     return (
         <>
-            <div className="grid grid-cols-8 gap-4">
-                <div className="col-start-3 col-span-4 mt-4">
+            <div className="grid grid-cols-12 md:grid-cols-6 gap-4 mx-4 md:mx-0">
+                <div className="col-start-1 col-span-12 md:col-start-2 md:col-span-4 mt-4 text-md md:text-xl">
                     <CodeMirror
                         value={state.query_statement}
                         width="100%"
@@ -71,13 +71,15 @@ const QueryEditor = () => {
                             "statement": value
                         })}
                     />
-                </div>
-            </div>
-            <div className="grid grid-cols-4 gap-4">
-                <div className="col-start-2 col-span-2 mt-2">
-                    <button className={isLoading ? 'btn btn-outline' : 'btn'}
-                        disabled={isLoading || state.query_targets.length === 0 || !state.query_statement}
-                        onClick={!isLoading ? handleSubmit : null}
+                    <button className={`hidden md:block btn mt-4 ${isLoading ? 'btn-outline' : ''}`}
+                            disabled={isLoading || state.query_targets.length === 0 || !state.query_statement}
+                            onClick={!isLoading ? handleSubmit : null}
+                    >
+                        {isLoading ? 'Loading…' : 'Submit'}
+                    </button>
+                    <button className={`md:hidden btn btn-block mt-4 ${isLoading ? 'btn-outline' : ''}`}
+                            disabled={isLoading || state.query_targets.length === 0 || !state.query_statement}
+                            onClick={!isLoading ? handleSubmit : null}
                     >
                         {isLoading ? 'Loading…' : 'Submit'}
                     </button>
