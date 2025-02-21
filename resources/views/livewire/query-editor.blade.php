@@ -1,7 +1,10 @@
 <div x-data="app" x-init="init" class="flex-col space-y-4">
     <div id="editor"></div>
     <div class="flex justify-end space-x-2">
-        <x-button x-on:click="submit" variant="outline">Submit</x-button>
+        <x-button x-on:click="submit" variant="outline">
+            <x-lucide-refresh-cw class="mr-2 size-4 animate-spin" x-show="submittingQuery" />
+            Submit
+        </x-button>
     </div>
     <div class="rounded-md border bg-background p-4 shadow-sm">
         <div class="overflow-x-auto">
@@ -98,6 +101,7 @@
             return {
                 query: '',
                 editor: null,
+                submittingQuery: false,
                 init: function () {
                     if( this.editor ) return;
                     this.editor = basicEditor('#editor', {
@@ -112,8 +116,11 @@
                         this.query = e
                     })
                 },
-                submit: function () {
-                    $wire.set('query', this.query);
+                submit: async function () {
+                    this.submittingQuery = true;
+                    await new Promise(resolve => setTimeout(resolve, 250));
+                    await $wire.setQuery(this.query);
+                    this.submittingQuery = false;
                 },
             }
         })
