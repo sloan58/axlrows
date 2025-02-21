@@ -12,7 +12,7 @@
 </head>
 <body class="min-h-screen bg-gray-50">
 <div class="flex min-h-screen">
-    <x-nav />
+    <x-layouts.nav />
 
     <!-- Main Content Area -->
     <main class="flex-1 p-6">
