@@ -1,6 +1,7 @@
 <?php
 
-use App\Livewire\Dashboard;
+use App\Livewire\{Ucms, QueryEditor};
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', Dashboard::class);
+Route::get('/', QueryEditor::class)->name('query-editor');
+Route::get('/ucms', Ucms::class)->name('ucms');
