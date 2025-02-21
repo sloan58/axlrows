@@ -1,4 +1,6 @@
 import './bootstrap';
+import { basicEditor } from "prism-code-editor/setups"
+import "prism-code-editor/prism/languages/sql"
 
 import collapse from "@alpinejs/collapse";
 import anchor from "@alpinejs/anchor";
@@ -16,3 +18,8 @@ document.addEventListener(
     },
     { once: true },
 );
+
+// noinspection JSConstantReassignment
+window.basicEditor = basicEditor;
+
+

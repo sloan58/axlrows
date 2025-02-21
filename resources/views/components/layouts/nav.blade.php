@@ -14,7 +14,6 @@
                     <a
                         href="{{ route($route['name']) }}"
                         class="block px-3 py-2 rounded-md text-gray-700 {{ request()->routeIs($route['name']) ? 'bg-gray-100 text-gray-900' : '' }}"
-                        :class=""
                         wire:navigate
                     >
                         {{ $route['label'] }}

@@ -1,4 +1,5 @@
 <div class="rounded-md border bg-background p-4 shadow-sm">
+    <div id="editor"></div>
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -85,4 +86,11 @@
             </tbody>
         </table>
     </div>
+    @script
+    <script>
+        basicEditor('#editor', { language: 'sql', theme: 'github-dark' }, () => {
+            console.log('Editor ready');
+        });
+    </script>
+    @endscript
 </div>
