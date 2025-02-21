@@ -21,5 +21,3 @@ document.addEventListener(
 
 // noinspection JSConstantReassignment
 window.basicEditor = basicEditor;
-
-

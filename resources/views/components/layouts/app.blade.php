@@ -8,7 +8,6 @@
     <title>{{ config('app.name') }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
 </head>
 <body class="min-h-screen bg-gray-50">
 <div class="flex min-h-screen">
