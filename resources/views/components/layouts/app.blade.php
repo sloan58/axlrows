@@ -10,11 +10,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-gray-50">
-<div class="flex min-h-screen">
-    <x-layouts.nav />
+<div class="grid grid-cols-12 h-screen">
+    <div class="col-span-1">
+        <x-layouts.nav/>
+    </div>
 
     <!-- Main Content Area -->
-    <main class="flex-1 p-6">
+    <main class="col-span-11 flex-1 p-6">
         {{ $slot }}
     </main>
 </div>

@@ -7,9 +7,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-simplexml": "*",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
+        "lorisleiva/laravel-actions": "^2.8",
         "luvi-ui/laravel-luvi": "^0.5.3",
         "mallardduck/blade-lucide-icons": "^1.23"
     },

@@ -1,5 +1,5 @@
 <!-- Left Sidebar (Navbar) -->
-<nav class="w-64 border-r bg-white">
+<nav class="border-r bg-white min-h-screen">
     <div class="p-4">
         <h2 class="text-lg font-semibold mb-4">Settings</h2>
         <ul class="space-y-2">
