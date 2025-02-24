@@ -59,7 +59,6 @@
                 },
                 submit: async function () {
                     this.submittingQuery = true;
-                    await new Promise(resolve => setTimeout(resolve, 250));
                     await $wire.setQuery(this.query);
                     this.submittingQuery = false;
                 },
