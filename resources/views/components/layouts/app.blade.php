@@ -11,10 +11,13 @@
 </head>
 <body class="min-h-screen bg-gray-50">
 <div class="flex min-h-screen">
-    <x-layouts.nav/>
+    <!-- Left Navbar -->
+    <div class="flex-shrink-0">
+        <x-layouts.nav/>
+    </div>
 
     <!-- Main Content Area -->
-    <main class="flex-1 p-6">
+    <main class="flex-grow overflow-auto p-6">
         {{ $slot }}
     </main>
 </div>
